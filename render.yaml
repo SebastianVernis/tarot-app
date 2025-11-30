@@ -1,9 +1,8 @@
 services:
-  # Tarot App - Static Web Service
+  # Tarot App - Static Site
   - type: web
     name: tarot-reader
     runtime: static
-    region: oregon
     plan: free
     branch: master
     buildCommand: echo "No build needed - static files only"
