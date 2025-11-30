@@ -3,7 +3,6 @@ services:
   - type: web
     name: tarot-reader
     runtime: static
-    plan: free
     branch: master
     buildCommand: echo "No build needed - static files only"
     staticPublishPath: .
