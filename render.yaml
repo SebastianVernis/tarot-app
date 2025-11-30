@@ -1,0 +1,18 @@
+services:
+  # Tarot App - Static Web Service
+  - type: web
+    name: tarot-reader
+    runtime: static
+    region: oregon
+    plan: free
+    branch: master
+    buildCommand: echo "No build needed - static files only"
+    staticPublishPath: .
+    routes:
+      - type: rewrite
+        source: /
+        destination: /tarot_web.html
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=3600
