@@ -20,6 +20,10 @@ class TipoTirada(Enum):
     HERRADURA = "herradura"
     UNA_CARTA = "una_carta"
     RELACION = "relacion"
+    AMOR = "amor"
+    ANUAL = "anual"
+    DECISION = "decision"
+    CHAKRAS = "chakras"
 
 
 @dataclass
@@ -396,6 +400,65 @@ class LectorTarot:
                     "Dónde va la relación"
                 ],
                 "num_cartas": 6
+            },
+            TipoTirada.AMOR: {
+                "nombre": "Lectura de Amor",
+                "descripcion": "Análisis profundo de tu vida amorosa y relaciones románticas",
+                "posiciones": [
+                    "Tu situación amorosa actual",
+                    "Tus sentimientos verdaderos",
+                    "Los sentimientos de la otra persona",
+                    "Obstáculos en el amor",
+                    "Fortalezas de la relación",
+                    "Consejo para el amor",
+                    "Futuro de la relación"
+                ],
+                "num_cartas": 7
+            },
+            TipoTirada.ANUAL: {
+                "nombre": "Lectura Anual",
+                "descripcion": "Visión de los próximos 12 meses, una carta por mes",
+                "posiciones": [
+                    "Enero - Nuevos comienzos",
+                    "Febrero - Relaciones",
+                    "Marzo - Acción y energía",
+                    "Abril - Estabilidad",
+                    "Mayo - Cambios",
+                    "Junio - Amor y armonía",
+                    "Julio - Reflexión",
+                    "Agosto - Fuerza interior",
+                    "Septiembre - Sabiduría",
+                    "Octubre - Transformación",
+                    "Noviembre - Esperanza",
+                    "Diciembre - Completitud"
+                ],
+                "num_cartas": 12
+            },
+            TipoTirada.DECISION: {
+                "nombre": "Lectura de Decisión",
+                "descripcion": "Ayuda para tomar una decisión importante entre dos opciones",
+                "posiciones": [
+                    "La situación actual",
+                    "Opción A - Pros",
+                    "Opción A - Contras",
+                    "Opción B - Pros",
+                    "Opción B - Contras"
+                ],
+                "num_cartas": 5
+            },
+            TipoTirada.CHAKRAS: {
+                "nombre": "Lectura de Chakras",
+                "descripcion": "Análisis energético de tus siete chakras principales",
+                "posiciones": [
+                    "Chakra Raíz - Seguridad y supervivencia",
+                    "Chakra Sacro - Creatividad y sexualidad",
+                    "Chakra Plexo Solar - Poder personal",
+                    "Chakra Corazón - Amor y compasión",
+                    "Chakra Garganta - Comunicación",
+                    "Chakra Tercer Ojo - Intuición",
+                    "Chakra Corona - Espiritualidad"
+                ],
+                "num_cartas": 7
             }
         }
     
@@ -520,11 +583,15 @@ def menu_principal():
         print("3. Cruz Celta (10 cartas)")
         print("4. Herradura (7 cartas)")
         print("5. Lectura de Relación (6 cartas)")
-        print("6. Salir")
+        print("6. Lectura de Amor (7 cartas)")
+        print("7. Lectura Anual (12 cartas)")
+        print("8. Lectura de Decisión (5 cartas)")
+        print("9. Lectura de Chakras (7 cartas)")
+        print("10. Salir")
         
-        opcion = input("\nElige una opción (1-6): ")
+        opcion = input("\nElige una opción (1-10): ")
         
-        if opcion == "6":
+        if opcion == "10":
             print("\n✨ Que las cartas iluminen tu camino. ¡Hasta pronto! ✨")
             break
         
@@ -533,7 +600,11 @@ def menu_principal():
             "2": TipoTirada.TRES_CARTAS,
             "3": TipoTirada.CRUZ_CELTA,
             "4": TipoTirada.HERRADURA,
-            "5": TipoTirada.RELACION
+            "5": TipoTirada.RELACION,
+            "6": TipoTirada.AMOR,
+            "7": TipoTirada.ANUAL,
+            "8": TipoTirada.DECISION,
+            "9": TipoTirada.CHAKRAS
         }
         
         if opcion in tipo_map:
@@ -545,7 +616,7 @@ def menu_principal():
             if guardar == 's':
                 lector.guardar_lectura(lectura)
         else:
-            print("\n❌ Opción no válida. Por favor, elige entre 1 y 6.")
+            print("\n❌ Opción no válida. Por favor, elige entre 1 y 10.")
         
         input("\nPresiona Enter para continuar...")
 

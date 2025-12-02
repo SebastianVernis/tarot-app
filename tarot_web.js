@@ -235,6 +235,61 @@ const TIRADAS = {
             "Dónde va la relación"
         ],
         descripcion: "Análisis de una relación entre dos personas"
+    },
+    amor: {
+        nombre: "Lectura de Amor",
+        posiciones: [
+            "Tu situación amorosa actual",
+            "Tus sentimientos verdaderos",
+            "Los sentimientos de la otra persona",
+            "Obstáculos en el amor",
+            "Fortalezas de la relación",
+            "Consejo para el amor",
+            "Futuro de la relación"
+        ],
+        descripcion: "Análisis profundo de tu vida amorosa y relaciones románticas"
+    },
+    anual: {
+        nombre: "Lectura Anual",
+        posiciones: [
+            "Enero - Nuevos comienzos",
+            "Febrero - Relaciones",
+            "Marzo - Acción y energía",
+            "Abril - Estabilidad",
+            "Mayo - Cambios",
+            "Junio - Amor y armonía",
+            "Julio - Reflexión",
+            "Agosto - Fuerza interior",
+            "Septiembre - Sabiduría",
+            "Octubre - Transformación",
+            "Noviembre - Esperanza",
+            "Diciembre - Completitud"
+        ],
+        descripcion: "Visión de los próximos 12 meses, una carta por mes"
+    },
+    decision: {
+        nombre: "Lectura de Decisión",
+        posiciones: [
+            "La situación actual",
+            "Opción A - Pros",
+            "Opción A - Contras",
+            "Opción B - Pros",
+            "Opción B - Contras"
+        ],
+        descripcion: "Ayuda para tomar una decisión importante entre dos opciones"
+    },
+    chakras: {
+        nombre: "Lectura de Chakras",
+        posiciones: [
+            "Chakra Raíz - Seguridad y supervivencia",
+            "Chakra Sacro - Creatividad y sexualidad",
+            "Chakra Plexo Solar - Poder personal",
+            "Chakra Corazón - Amor y compasión",
+            "Chakra Garganta - Comunicación",
+            "Chakra Tercer Ojo - Intuición",
+            "Chakra Corona - Espiritualidad"
+        ],
+        descripcion: "Análisis energético de tus siete chakras principales"
     }
 };
 

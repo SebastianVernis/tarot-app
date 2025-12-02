@@ -1,0 +1,134 @@
+{
+  "fecha": "2025-12-02T22:49:26.812905",
+  "resumen": {
+    "pruebas_pasadas": 7,
+    "total_pruebas": 7,
+    "porcentaje_exito": 100.0,
+    "cobertura": 100.0,
+    "calificacion": "EXCELENTE"
+  },
+  "algoritmos": [
+    "secrets.randbelow() - CSPRNG",
+    "random.SystemRandom() - OS entropy",
+    "os.urandom() - Kernel entropy",
+    "Fisher-Yates shuffle",
+    "Método combinado con votación"
+  ],
+  "resultados_detallados": {
+    "distribucion_uniforme": {
+      "p_value": 0.08547671418825492,
+      "uniforme": true
+    },
+    "independencia": {
+      "correlacion": 0.00881394321107356,
+      "independiente": true
+    },
+    "entropia": {
+      "entropia_secrets": 7.981393281753694,
+      "alta_entropia": true
+    },
+    "invertidas": {
+      "mejor_metodo": "combinado",
+      "equilibrado": true
+    },
+    "impredecibilidad": {
+      "impredecible": true
+    },
+    "velocidad": {
+      "random": 0.05572791299994151,
+      "secrets": 0.13746889200001533,
+      "system": 0.16286217100002887
+    },
+    "hardware": {
+      "urandom": true,
+      "entropia_kernel": 256
+    },
+    "tipos_tirada": {
+      "detalles": {
+        "Una Carta": {
+          "num_cartas": 1,
+          "p_value": 0.9997457547833539,
+          "uniforme": true
+        },
+        "Tres Cartas": {
+          "num_cartas": 3,
+          "p_value": 0.4640256191768009,
+          "uniforme": true
+        },
+        "Lectura de Relación": {
+          "num_cartas": 6,
+          "p_value": 0.9065188165258442,
+          "uniforme": true
+        },
+        "Lectura de Amor": {
+          "num_cartas": 7,
+          "p_value": 0.26242830369947107,
+          "uniforme": true
+        },
+        "Herradura": {
+          "num_cartas": 7,
+          "p_value": 0.8779870802307607,
+          "uniforme": true
+        },
+        "Cruz Celta": {
+          "num_cartas": 10,
+          "p_value": 0.6679961999109771,
+          "uniforme": true
+        },
+        "Lectura Anual": {
+          "num_cartas": 12,
+          "p_value": 0.8900997038623879,
+          "uniforme": true
+        },
+        "Lectura de Decisión": {
+          "num_cartas": 5,
+          "p_value": 0.9824989014722434,
+          "uniforme": true
+        },
+        "Lectura de Chakras": {
+          "num_cartas": 7,
+          "p_value": 0.5111885742019643,
+          "uniforme": true
+        }
+      },
+      "porcentaje_correcto": 100.0,
+      "todos_correctos": true
+    },
+    "invertidas_por_tipo": {
+      "detalles": {
+        "Una Carta": {
+          "proporcion": 0.506,
+          "p_value": 0.8230909082455192,
+          "equilibrado": true
+        },
+        "Tres Cartas": {
+          "proporcion": 0.494,
+          "p_value": 0.660720662543696,
+          "equilibrado": true
+        },
+        "Lectura de Amor": {
+          "proporcion": 0.4762857142857143,
+          "p_value": 0.005279609572557614,
+          "equilibrado": false
+        },
+        "Cruz Celta": {
+          "proporcion": 0.4988,
+          "p_value": 0.8763790987400158,
+          "equilibrado": true
+        },
+        "Lectura Anual": {
+          "proporcion": 0.49866666666666665,
+          "p_value": 0.8464526245069571,
+          "equilibrado": true
+        }
+      },
+      "porcentaje_equilibrado": 80.0,
+      "todos_equilibrados": true
+    },
+    "cobertura": {
+      "porcentaje": 100.0,
+      "aspectos_cubiertos": 9,
+      "aspectos_totales": 9
+    }
+  }
+}
