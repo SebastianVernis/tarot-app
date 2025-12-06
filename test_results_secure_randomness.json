@@ -1,0 +1,13 @@
+{
+  "timestamp": "2025-12-06T06:08:33.859609",
+  "simulations": 1000,
+  "tests": {
+    "uniformity_chi_squared": {
+      "test_name": "Chi-Squared Uniformity",
+      "simulations": 1000,
+      "chi2_statistic": 53.93600000000001,
+      "p_value": 0.9788260097561492,
+      "expected_frequency": 12.820512820512821,
+      "observed_mean": 12.820512820512821,
+      "observed_std": 2.977451972716879,
+      "passed": 

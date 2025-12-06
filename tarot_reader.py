@@ -3,7 +3,12 @@
 Sistema de Lectura de Tarot Interactivo con Aleatoriedad Criptográfica
 Autor: Assistant
 Descripción: Simula una lectura de tarot con múltiples tiradas y significados
-             usando generadores de aleatoriedad criptográficamente seguros
+usando generadores de aleatoriedad criptográficamente seguros
+
+
+SECURITY: Uses cryptographically secure randomness (CSPRNG) for all card
+shuffling and selection operations. No predictable seeds are used.
+
 """
 
 import random
@@ -16,6 +21,7 @@ from datetime import datetime
 from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass
 from enum import Enum
+from tarot_secure_random import TarotSecureShuffler
 
 
 class TipoTirada(Enum):
@@ -48,12 +54,14 @@ class Carta:
 
 
 class MazoTarot:
-    """Mazo completo de 78 cartas del Tarot"""
+    """Mazo completo de 78 cartas del Tarot con aleatoriedad criptográfica"""
     
     def __init__(self):
         self.cartas: List[Carta] = []
         self._crear_arcanos_mayores()
         self._crear_arcanos_menores()
+        # Initialize secure shuffler for cryptographic randomness
+        self.secure_shuffler = TarotSecureShuffler()
         
     def _crear_arcanos_mayores(self):
         """Crea las 22 cartas de los Arcanos Mayores"""
