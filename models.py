@@ -182,3 +182,161 @@ class Subscription(db.Model):
             'currency': self.currency,
             'created_at': self.created_at.isoformat()
         }
+
+
+class BirthChart(db.Model):
+    """Modelo para cartas natales astrológicas"""
+    __tablename__ = 'birth_charts'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
+    
+    # Datos de nacimiento
+    birth_datetime = db.Column(db.DateTime, nullable=False)
+    timezone = db.Column(db.String(50), nullable=False)
+    latitude = db.Column(db.Float, nullable=False)
+    longitude = db.Column(db.Float, nullable=False)
+    location_name = db.Column(db.String(200), nullable=True)
+    
+    # Datos calculados (almacenados como JSON)
+    planetary_positions = db.Column(db.Text, nullable=False)  # JSON
+    houses_data = db.Column(db.Text, nullable=False)  # JSON
+    aspects_data = db.Column(db.Text, nullable=False)  # JSON
+    chart_summary = db.Column(db.Text, nullable=True)  # JSON
+    
+    # Sistema de casas utilizado
+    house_system = db.Column(db.String(1), default='P')  # P=Placidus, K=Koch, E=Equal
+    
+    # Interpretaciones (generadas por Gemini)
+    interpretations = db.Column(db.Text, nullable=True)  # JSON
+    
+    # Metadata
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    is_favorite = db.Column(db.Boolean, default=False)
+    notes = db.Column(db.Text, nullable=True)
+    name = db.Column(db.String(100), nullable=True)  # Nombre opcional para la carta
+    
+    # Relación
+    user = db.relationship('User', backref='birth_charts')
+    
+    def set_planetary_positions(self, positions_dict):
+        """Guarda posiciones planetarias como JSON"""
+        self.planetary_positions = json.dumps(positions_dict, ensure_ascii=False)
+    
+    def get_planetary_positions(self):
+        """Obtiene posiciones planetarias desde JSON"""
+        return json.loads(self.planetary_positions) if self.planetary_positions else {}
+    
+    def set_houses_data(self, houses_dict):
+        """Guarda datos de casas como JSON"""
+        self.houses_data = json.dumps(houses_dict, ensure_ascii=False)
+    
+    def get_houses_data(self):
+        """Obtiene datos de casas desde JSON"""
+        return json.loads(self.houses_data) if self.houses_data else {}
+    
+    def set_aspects_data(self, aspects_list):
+        """Guarda aspectos como JSON"""
+        self.aspects_data = json.dumps(aspects_list, ensure_ascii=False)
+    
+    def get_aspects_data(self):
+        """Obtiene aspectos desde JSON"""
+        return json.loads(self.aspects_data) if self.aspects_data else []
+    
+    def set_chart_summary(self, summary_dict):
+        """Guarda resumen de carta como JSON"""
+        self.chart_summary = json.dumps(summary_dict, ensure_ascii=False)
+    
+    def get_chart_summary(self):
+        """Obtiene resumen de carta desde JSON"""
+        return json.loads(self.chart_summary) if self.chart_summary else {}
+    
+    def set_interpretations(self, interpretations_dict):
+        """Guarda interpretaciones como JSON"""
+        self.interpretations = json.dumps(interpretations_dict, ensure_ascii=False)
+    
+    def get_interpretations(self):
+        """Obtiene interpretaciones desde JSON"""
+        return json.loads(self.interpretations) if self.interpretations else {}
+    
+    def to_dict(self, include_full_data=True):
+        """Convierte la carta natal a diccionario"""
+        data = {
+            'id': self.id,
+            'user_id': self.user_id,
+            'name': self.name,
+            'birth_datetime': self.birth_datetime.isoformat(),
+            'timezone': self.timezone,
+            'latitude': self.latitude,
+            'longitude': self.longitude,
+            'location_name': self.location_name,
+            'house_system': self.house_system,
+            'created_at': self.created_at.isoformat(),
+            'updated_at': self.updated_at.isoformat(),
+            'is_favorite': self.is_favorite,
+            'notes': self.notes
+        }
+        
+        if include_full_data:
+            data.update({
+                'planetary_positions': self.get_planetary_positions(),
+                'houses': self.get_houses_data(),
+                'aspects': self.get_aspects_data(),
+                'chart_summary': self.get_chart_summary(),
+                'interpretations': self.get_interpretations()
+            })
+        
+        return data
+
+
+class AspectRecord(db.Model):
+    """Modelo para registrar aspectos planetarios específicos"""
+    __tablename__ = 'aspect_records'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    birth_chart_id = db.Column(db.Integer, db.ForeignKey('birth_charts.id'), nullable=False, index=True)
+    
+    # Planetas involucrados
+    planet1_id = db.Column(db.Integer, nullable=False)
+    planet1_name = db.Column(db.String(50), nullable=False)
+    planet2_id = db.Column(db.Integer, nullable=False)
+    planet2_name = db.Column(db.String(50), nullable=False)
+    
+    # Datos del aspecto
+    aspect_name = db.Column(db.String(50), nullable=False)
+    aspect_angle = db.Column(db.Float, nullable=False)
+    orb = db.Column(db.Float, nullable=False)
+    nature = db.Column(db.String(20), nullable=False)  # harmonious, challenging, neutral, minor
+    
+    # Interpretación
+    interpretation = db.Column(db.Text, nullable=True)
+    
+    # Metadata
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    # Relación
+    birth_chart = db.relationship('BirthChart', backref='aspect_records')
+    
+    def to_dict(self):
+        """Convierte el aspecto a diccionario"""
+        return {
+            'id': self.id,
+            'birth_chart_id': self.birth_chart_id,
+            'planet1': {
+                'id': self.planet1_id,
+                'name': self.planet1_name
+            },
+            'planet2': {
+                'id': self.planet2_id,
+                'name': self.planet2_name
+            },
+            'aspect': {
+                'name': self.aspect_name,
+                'angle': self.aspect_angle,
+                'orb': self.orb,
+                'nature': self.nature
+            },
+            'interpretation': self.interpretation,
+            'created_at': self.created_at.isoformat()
+        }
