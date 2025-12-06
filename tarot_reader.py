@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 """
-Sistema de Lectura de Tarot Interactivo
+Sistema de Lectura de Tarot Interactivo con Aleatoriedad Criptográfica
 Autor: Assistant
 Descripción: Simula una lectura de tarot con múltiples tiradas y significados
+             usando generadores de aleatoriedad criptográficamente seguros
 """
 
 import random
+import secrets
 import json
+import os
+import time
+import hashlib
 from datetime import datetime
 from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass
@@ -322,17 +327,21 @@ class MazoTarot:
                 ))
     
     def barajar(self):
-        """Baraja el mazo"""
-        random.shuffle(self.cartas)
-    
+        """Baraja el mazo usando Fisher-Yates con aleatoriedad criptográfica"""
+        self.cartas = self.generador_seguro.fisher_yates_shuffle(self.cartas)
+
     def sacar_carta(self) -> Tuple[Carta, bool]:
-        """Saca una carta del mazo y determina si está invertida"""
+        """Saca una carta del mazo y determina si está invertida usando aleatoriedad segura"""
         if not self.cartas:
             raise ValueError("No hay más cartas en el mazo")
-        
+
         carta = self.cartas.pop()
-        invertida = random.choice([True, False])
+        invertida = self.generador_seguro.obtener_bool_seguro()
         return carta, invertida
+
+    def obtener_metricas_aleatoriedad(self) -> Dict:
+        """Retorna métricas de aleatoriedad del mazo"""
+        return self.generador_seguro.obtener_metricas_entropia()
 
 
 class LectorTarot:
@@ -463,8 +472,8 @@ class LectorTarot:
         }
     
     def realizar_lectura(self, tipo_tirada: TipoTirada, pregunta: str = "") -> Dict:
-        """Realiza una lectura de tarot completa"""
-        self.mazo = MazoTarot()  # Reiniciar mazo
+        """Realiza una lectura de tarot completa con aleatoriedad verificada"""
+        self.mazo = MazoTarot()  # Reiniciar mazo con generador seguro
         self.mazo.barajar()
         
         tirada_info = self.tiradas[tipo_tirada]
@@ -508,10 +517,21 @@ class LectorTarot:
         # Generar interpretación general
         interpretacion = self._generar_interpretacion(lectura, tipo_tirada)
         lectura["interpretacion"] = interpretacion
-        
+
+        # Agregar métricas de aleatoriedad a la lectura
+        lectura["metricas_aleatoriedad"] = self.mazo.obtener_metricas_aleatoriedad()
+
         print("📖 Interpretación General:")
         print(f"{interpretacion}\n")
-        
+
+        # Mostrar métricas de aleatoriedad (solo en desarrollo)
+        if os.getenv('TAROT_DEBUG', '').lower() == 'true':
+            print("🔐 Métricas de Aleatoriedad:")
+            metricas = lectura["metricas_aleatoriedad"]
+            print(f"   Llamadas de aleatoriedad: {metricas['llamadas_totales']}")
+            print(f"   Entropía acumulada: {metricas['entropia_acumulada_bits']} bits")
+            print()
+
         return lectura
     
     def _generar_interpretacion(self, lectura: Dict, tipo_tirada: TipoTirada) -> str:
