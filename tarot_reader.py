@@ -3,14 +3,17 @@
 Sistema de Lectura de Tarot Interactivo
 Autor: Assistant
 Descripción: Simula una lectura de tarot con múltiples tiradas y significados
+
+SECURITY: Uses cryptographically secure randomness (CSPRNG) for all card
+shuffling and selection operations. No predictable seeds are used.
 """
 
-import random
 import json
 from datetime import datetime
 from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass
 from enum import Enum
+from tarot_secure_random import TarotSecureShuffler
 
 
 class TipoTirada(Enum):
@@ -43,12 +46,14 @@ class Carta:
 
 
 class MazoTarot:
-    """Mazo completo de 78 cartas del Tarot"""
+    """Mazo completo de 78 cartas del Tarot con aleatoriedad criptográfica"""
     
     def __init__(self):
         self.cartas: List[Carta] = []
         self._crear_arcanos_mayores()
         self._crear_arcanos_menores()
+        # Initialize secure shuffler for cryptographic randomness
+        self.secure_shuffler = TarotSecureShuffler()
         
     def _crear_arcanos_mayores(self):
         """Crea las 22 cartas de los Arcanos Mayores"""
@@ -322,16 +327,27 @@ class MazoTarot:
                 ))
     
     def barajar(self):
-        """Baraja el mazo"""
-        random.shuffle(self.cartas)
+        """
+        Baraja el mazo usando Fisher-Yates con CSPRNG.
+        
+        Security: Uses cryptographically secure random number generator
+        (secrets module) to ensure unpredictable, uniform shuffling.
+        No seeds or predictable parameters are used.
+        """
+        self.cartas = self.secure_shuffler.shuffle_deck(self.cartas)
     
     def sacar_carta(self) -> Tuple[Carta, bool]:
-        """Saca una carta del mazo y determina si está invertida"""
+        """
+        Saca una carta del mazo y determina si está invertida.
+        
+        Security: Uses cryptographically secure boolean generation
+        for card orientation (50/50 probability, unpredictable).
+        """
         if not self.cartas:
             raise ValueError("No hay más cartas en el mazo")
         
         carta = self.cartas.pop()
-        invertida = random.choice([True, False])
+        invertida = self.secure_shuffler.determine_orientation()
         return carta, invertida
 
 
