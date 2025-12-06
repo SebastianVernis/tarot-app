@@ -14,6 +14,7 @@ from routes.auth_routes import auth_bp
 from routes.user_routes import user_bp
 from routes.reading_routes import reading_bp
 from routes.subscription_routes import subscription_bp
+from routes.astrology_routes import astrology_bp
 
 
 def create_app(config_class=Config):
@@ -34,6 +35,7 @@ def create_app(config_class=Config):
     app.register_blueprint(user_bp)
     app.register_blueprint(reading_bp)
     app.register_blueprint(subscription_bp)
+    app.register_blueprint(astrology_bp)
     
     # Crear tablas si no existen
     with app.app_context():
@@ -69,14 +71,18 @@ def create_app(config_class=Config):
                 'auth': '/api/auth/*',
                 'user': '/api/user/*',
                 'readings': '/api/readings/*',
-                'subscription': '/api/subscription/*'
+                'subscription': '/api/subscription/*',
+                'astrology': '/api/astrology/*'
             },
             'features': [
                 'Autenticación JWT',
                 'Sistema Freemium',
                 'Persistencia de temas',
                 'Gestión de lecturas',
-                'Suscripciones'
+                'Suscripciones',
+                'Cálculos astrológicos precisos',
+                'Carta natal completa',
+                'Interpretaciones con IA'
             ]
         }), 200
     
