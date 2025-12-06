@@ -1,0 +1,949 @@
+{
+  "birth_data": {
+    "datetime": "1990-05-15T14:30:00",
+    "timezone": "America/Mexico_City",
+    "latitude": 19.4326,
+    "longitude": -99.1332,
+    "julian_day": 2448027.3541666665
+  },
+  "planetary_positions": {
+    "0": {
+      "name": "Sol",
+      "symbol": "☉",
+      "longitude": 54.73758999222477,
+      "latitude": -2.3418481213650307e-06,
+      "distance": 1.0109778216979846,
+      "speed": 0.9640933010741365,
+      "retrograde": false,
+      "sign": "Tauro",
+      "sign_symbol": "♉",
+      "degree_in_sign": 24.73758999222477,
+      "element": "Tierra",
+      "quality": "Fijo"
+    },
+    "1": {
+      "name": "Luna",
+      "symbol": "☽",
+      "longitude": 301.55246887370896,
+      "latitude": -0.7652453692168076,
+      "distance": 0.0026329014955680822,
+      "speed": 12.440876876844303,
+      "retrograde": false,
+      "sign": "Acuario",
+      "sign_symbol": "♒",
+      "degree_in_sign": 1.5524688737089605,
+      "element": "Aire",
+      "quality": "Fijo"
+    },
+    "2": {
+      "name": "Mercurio",
+      "symbol": "☿",
+      "longitude": 37.97457096591934,
+      "latitude": -2.5868726990502555,
+      "distance": 0.6052629735911124,
+      "speed": -0.09364237854591174,
+      "retrograde": true,
+      "sign": "Tauro",
+      "sign_symbol": "♉",
+      "degree_in_sign": 7.974570965919341,
+      "element": "Tierra",
+      "quality": "Fijo"
+    },
+    "3": {
+      "name": "Venus",
+      "symbol": "♀",
+      "longitude": 13.222395389331822,
+      "latitude": -1.8076363843488599,
+      "distance": 1.0406070892833554,
+      "speed": 1.1412113592262478,
+      "retrograde": false,
+      "sign": "Aries",
+      "sign_symbol": "♈",
+      "degree_in_sign": 13.222395389331822,
+      "element": "Fuego",
+      "quality": "Cardinal"
+    },
+    "4": {
+      "name": "Marte",
+      "symbol": "♂",
+      "longitude": 348.5968740536154,
+      "latitude": -1.7337132050753896,
+      "distance": 1.454527247377661,
+      "speed": 0.7425724562162148,
+      "retrograde": false,
+      "sign": "Piscis",
+      "sign_symbol": "♓",
+      "degree_in_sign": 18.59687405361541,
+      "element": "Agua",
+      "quality": "Mutable"
+    },
+    "5": {
+      "name": "Júpiter",
+      "symbol": "♃",
+      "longitude": 99.60877584914809,
+      "latitude": 0.14312918946130057,
+      "distance": 5.867030262686065,
+      "speed": 0.18963116596645385,
+      "retrograde": false,
+      "sign": "Cáncer",
+      "sign_symbol": "♋",
+      "degree_in_sign": 9.608775849148088,
+      "element": "Agua",
+      "quality": "Cardinal"
+    },
+    "6": {
+      "name": "Saturno",
+      "symbol": "♄",
+      "longitude": 295.24335851173214,
+      "latitude": 0.1546812518263462,
+      "distance": 9.479483608211412,
+      "speed": -0.017464003987592007,
+      "retrograde": true,
+      "sign": "Capricornio",
+      "sign_symbol": "♑",
+      "degree_in_sign": 25.24335851173214,
+      "element": "Tierra",
+      "quality": "Cardinal"
+    },
+    "7": {
+      "name": "Urano",
+      "symbol": "♅",
+      "longitude": 279.17516573167694,
+      "latitude": -0.31489210010100144,
+      "distance": 18.669240567906247,
+      "speed": -0.024820612233273108,
+      "retrograde": true,
+      "sign": "Capricornio",
+      "sign_symbol": "♑",
+      "degree_in_sign": 9.175165731676941,
+      "element": "Tierra",
+      "quality": "Cardinal"
+    },
+    "8": {
+      "name": "Neptuno",
+      "symbol": "♆",
+      "longitude": 284.34766286081936,
+      "latitude": 0.8725218599791594,
+      "distance": 29.542367914234475,
+      "speed": -0.014884865942064245,
+      "retrograde": true,
+      "sign": "Capricornio",
+      "sign_symbol": "♑",
+      "degree_in_sign": 14.347662860819355,
+      "element": "Tierra",
+      "quality": "Cardinal"
+    },
+    "9": {
+      "name": "Plutón",
+      "symbol": "♇",
+      "longitude": 226.15762894633235,
+      "latitude": 15.990869704025542,
+      "distance": 28.69588945492666,
+      "speed": -0.027693378595129315,
+      "retrograde": true,
+      "sign": "Escorpio",
+      "sign_symbol": "♏",
+      "degree_in_sign": 16.157628946332352,
+      "element": "Agua",
+      "quality": "Fijo"
+    },
+    "10": {
+      "name": "Nodo Norte",
+      "symbol": "☊",
+      "longitude": 310.24684079243997,
+      "sign": "Acuario",
+      "sign_symbol": "♒",
+      "degree_in_sign": 10.246840792439968
+    }
+  },
+  "houses": {
+    "houses": {
+      "1": {
+        "number": 1,
+        "cusp_longitude": 172.1323275122244,
+        "sign": "Virgo",
+        "sign_symbol": "♍",
+        "degree_in_sign": 22.132327512224407,
+        "element": "Tierra"
+      },
+      "2": {
+        "number": 2,
+        "cusp_longitude": 201.32030446022867,
+        "sign": "Libra",
+        "sign_symbol": "♎",
+        "degree_in_sign": 21.32030446022867,
+        "element": "Aire"
+      },
+      "3": {
+        "number": 3,
+        "cusp_longitude": 231.8662827467309,
+        "sign": "Escorpio",
+        "sign_symbol": "♏",
+        "degree_in_sign": 21.86628274673089,
+        "element": "Agua"
+      },
+      "4": {
+        "number": 4,
+        "cusp_longitude": 262.35094956171645,
+        "sign": "Sagitario",
+        "sign_symbol": "♐",
+        "degree_in_sign": 22.350949561716448,
+        "element": "Fuego"
+      },
+      "5": {
+        "number": 5,
+        "cusp_longitude": 292.54200525699935,
+        "sign": "Capricornio",
+        "sign_symbol": "♑",
+        "degree_in_sign": 22.542005256999346,
+        "element": "Tierra"
+      },
+      "6": {
+        "number": 6,
+        "cusp_longitude": 322.675583892375,
+        "sign": "Acuario",
+        "sign_symbol": "♒",
+        "degree_in_sign": 22.675583892375016,
+        "element": "Aire"
+      },
+      "7": {
+        "number": 7,
+        "cusp_longitude": 352.1323275122244,
+        "sign": "Piscis",
+        "sign_symbol": "♓",
+        "degree_in_sign": 22.13232751222438,
+        "element": "Agua"
+      },
+      "8": {
+        "number": 8,
+        "cusp_longitude": 21.32030446022867,
+        "sign": "Aries",
+        "sign_symbol": "♈",
+        "degree_in_sign": 21.32030446022867,
+        "element": "Fuego"
+      },
+      "9": {
+        "number": 9,
+        "cusp_longitude": 51.86628274673092,
+        "sign": "Tauro",
+        "sign_symbol": "♉",
+        "degree_in_sign": 21.866282746730917,
+        "element": "Tierra"
+      },
+      "10": {
+        "number": 10,
+        "cusp_longitude": 82.35094956171643,
+        "sign": "Géminis",
+        "sign_symbol": "♊",
+        "degree_in_sign": 22.350949561716433,
+        "element": "Aire"
+      },
+      "11": {
+        "number": 11,
+        "cusp_longitude": 112.54200525699935,
+        "sign": "Cáncer",
+        "sign_symbol": "♋",
+        "degree_in_sign": 22.542005256999346,
+        "element": "Agua"
+      },
+      "12": {
+        "number": 12,
+        "cusp_longitude": 142.67558389237502,
+        "sign": "Leo",
+        "sign_symbol": "♌",
+        "degree_in_sign": 22.675583892375016,
+        "element": "Fuego"
+      }
+    },
+    "ascendant": {
+      "longitude": 172.1323275122244,
+      "sign": "Virgo",
+      "sign_symbol": "♍",
+      "degree_in_sign": 22.132327512224407
+    },
+    "midheaven": {
+      "longitude": 82.35094956171643,
+      "sign": "Géminis",
+      "sign_symbol": "♊",
+      "degree_in_sign": 22.350949561716433
+    },
+    "house_system": "P"
+  },
+  "planets_in_houses": {
+    "1": [],
+    "2": [
+      {
+        "planet_id": 9,
+        "name": "Plutón",
+        "symbol": "♇",
+        "longitude": 226.15762894633235,
+        "sign": "Escorpio",
+        "degree_in_sign": 16.157628946332352
+      }
+    ],
+    "3": [],
+    "4": [
+      {
+        "planet_id": 7,
+        "name": "Urano",
+        "symbol": "♅",
+        "longitude": 279.17516573167694,
+        "sign": "Capricornio",
+        "degree_in_sign": 9.175165731676941
+      },
+      {
+        "planet_id": 8,
+        "name": "Neptuno",
+        "symbol": "♆",
+        "longitude": 284.34766286081936,
+        "sign": "Capricornio",
+        "degree_in_sign": 14.347662860819355
+      }
+    ],
+    "5": [
+      {
+        "planet_id": 1,
+        "name": "Luna",
+        "symbol": "☽",
+        "longitude": 301.55246887370896,
+        "sign": "Acuario",
+        "degree_in_sign": 1.5524688737089605
+      },
+      {
+        "planet_id": 6,
+        "name": "Saturno",
+        "symbol": "♄",
+        "longitude": 295.24335851173214,
+        "sign": "Capricornio",
+        "degree_in_sign": 25.24335851173214
+      },
+      {
+        "planet_id": 10,
+        "name": "Nodo Norte",
+        "symbol": "☊",
+        "longitude": 310.24684079243997,
+        "sign": "Acuario",
+        "degree_in_sign": 10.246840792439968
+      }
+    ],
+    "6": [
+      {
+        "planet_id": 4,
+        "name": "Marte",
+        "symbol": "♂",
+        "longitude": 348.5968740536154,
+        "sign": "Piscis",
+        "degree_in_sign": 18.59687405361541
+      }
+    ],
+    "7": [
+      {
+        "planet_id": 3,
+        "name": "Venus",
+        "symbol": "♀",
+        "longitude": 13.222395389331822,
+        "sign": "Aries",
+        "degree_in_sign": 13.222395389331822
+      }
+    ],
+    "8": [
+      {
+        "planet_id": 2,
+        "name": "Mercurio",
+        "symbol": "☿",
+        "longitude": 37.97457096591934,
+        "sign": "Tauro",
+        "degree_in_sign": 7.974570965919341
+      }
+    ],
+    "9": [
+      {
+        "planet_id": 0,
+        "name": "Sol",
+        "symbol": "☉",
+        "longitude": 54.73758999222477,
+        "sign": "Tauro",
+        "degree_in_sign": 24.73758999222477
+      }
+    ],
+    "10": [
+      {
+        "planet_id": 5,
+        "name": "Júpiter",
+        "symbol": "♃",
+        "longitude": 99.60877584914809,
+        "sign": "Cáncer",
+        "degree_in_sign": 9.608775849148088
+      }
+    ],
+    "11": [],
+    "12": []
+  },
+  "aspects": [
+    {
+      "planet1": {
+        "id": 0,
+        "name": "Sol",
+        "symbol": "☉",
+        "longitude": 54.73758999222477
+      },
+      "planet2": {
+        "id": 5,
+        "name": "Júpiter",
+        "symbol": "♃",
+        "longitude": 99.60877584914809
+      },
+      "aspect": "Semi-cuadratura",
+      "aspect_symbol": "∠",
+      "angle": 45,
+      "orb": 0.12881414307668138,
+      "max_orb": 2,
+      "nature": "minor",
+      "exact_angle": 44.87118585692332,
+      "applying": false
+    },
+    {
+      "planet1": {
+        "id": 5,
+        "name": "Júpiter",
+        "symbol": "♃",
+        "longitude": 99.60877584914809
+      },
+      "planet2": {
+        "id": 7,
+        "name": "Urano",
+        "symbol": "♅",
+        "longitude": 279.17516573167694
+      },
+      "aspect": "Oposición",
+      "aspect_symbol": "☍",
+      "angle": 180,
+      "orb": 0.4336101174711473,
+      "max_orb": 8,
+      "nature": "challenging",
+      "exact_angle": 179.56638988252885,
+      "applying": false
+    },
+    {
+      "planet1": {
+        "id": 0,
+        "name": "Sol",
+        "symbol": "☉",
+        "longitude": 54.73758999222477
+      },
+      "planet2": {
+        "id": 6,
+        "name": "Saturno",
+        "symbol": "♄",
+        "longitude": 295.24335851173214
+      },
+      "aspect": "Trígono",
+      "aspect_symbol": "△",
+      "angle": 120,
+      "orb": 0.5057685195073702,
+      "max_orb": 8,
+      "nature": "harmonious",
+      "exact_angle": 119.49423148049263,
+      "applying": false
+    },
+    {
+      "planet1": {
+        "id": 0,
+        "name": "Sol",
+        "symbol": "☉",
+        "longitude": 54.73758999222477
+      },
+      "planet2": {
+        "id": 7,
+        "name": "Urano",
+        "symbol": "♅",
+        "longitude": 279.17516573167694
+      },
+      "aspect": "Sesquicuadratura",
+      "aspect_symbol": "⚼",
+      "angle": 135,
+      "orb": 0.5624242605478287,
+      "max_orb": 2,
+      "nature": "minor",
+      "exact_angle": 135.56242426054783,
+      "applying": true
+    },
+    {
+      "planet1": {
+        "id": 5,
+        "name": "Júpiter",
+        "symbol": "♃",
+        "longitude": 99.60877584914809
+      },
+      "planet2": {
+        "id": 10,
+        "name": "Nodo Norte",
+        "symbol": "☊",
+        "longitude": 310.24684079243997
+      },
+      "aspect": "Quincuncio",
+      "aspect_symbol": "⚻",
+      "angle": 150,
+      "orb": 0.6380649432918801,
+      "max_orb": 2,
+      "nature": "minor",
+      "exact_angle": 149.36193505670812,
+      "applying": false
+    },
+    {
+      "planet1": {
+        "id": 7,
+        "name": "Urano",
+        "symbol": "♅",
+        "longitude": 279.17516573167694
+      },
+      "planet2": {
+        "id": 10,
+        "name": "Nodo Norte",
+        "symbol": "☊",
+        "longitude": 310.24684079243997
+      },
+      "aspect": "Semi-sextil",
+      "aspect_symbol": "⚺",
+      "angle": 30,
+      "orb": 1.0716750607630274,
+      "max_orb": 2,
+      "nature": "minor",
+      "exact_angle": 31.071675060763027,
+      "applying": false
+    },
+    {
+      "planet1": {
+        "id": 3,
+        "name": "Venus",
+        "symbol": "♀",
+        "longitude": 13.222395389331822
+      },
+      "planet2": {
+        "id": 8,
+        "name": "Neptuno",
+        "symbol": "♆",
+        "longitude": 284.34766286081936
+      },
+      "aspect": "Cuadratura",
+      "aspect_symbol": "□",
+      "angle": 90,
+      "orb": 1.1252674714875184,
+      "max_orb": 8,
+      "nature": "challenging",
+      "exact_angle": 88.87473252851248,
+      "applying": false
+    },
+    {
+      "planet1": {
+        "id": 2,
+        "name": "Mercurio",
+        "symbol": "☿",
+        "longitude": 37.97457096591934
+      },
+      "planet2": {
+        "id": 7,
+        "name": "Urano",
+        "symbol": "♅",
+        "longitude": 279.17516573167694
+      },
+      "aspect": "Trígono",
+      "aspect_symbol": "△",
+      "angle": 120,
+      "orb": 1.2005947657576144,
+      "max_orb": 8,
+      "nature": "harmonious",
+      "exact_angle": 118.79940523424239,
+      "applying": true
+    },
+    {
+      "planet1": {
+        "id": 2,
+        "name": "Mercurio",
+        "symbol": "☿",
+        "longitude": 37.97457096591934
+      },
+      "planet2": {
+        "id": 5,
+        "name": "Júpiter",
+        "symbol": "♃",
+        "longitude": 99.60877584914809
+      },
+      "aspect": "Sextil",
+      "aspect_symbol": "⚹",
+      "angle": 60,
+      "orb": 1.6342048832287475,
+      "max_orb": 6,
+      "nature": "harmonious",
+      "exact_angle": 61.63420488322875,
+      "applying": false
+    },
+    {
+      "planet1": {
+        "id": 8,
+        "name": "Neptuno",
+        "symbol": "♆",
+        "longitude": 284.34766286081936
+      },
+      "planet2": {
+        "id": 9,
+        "name": "Plutón",
+        "symbol": "♇",
+        "longitude": 226.15762894633235
+      },
+      "aspect": "Sextil",
+      "aspect_symbol": "⚹",
+      "angle": 60,
+      "orb": 1.8099660855129969,
+      "max_orb": 6,
+      "nature": "harmonious",
+      "exact_angle": 58.190033914487,
+      "applying": false
+    },
+    {
+      "planet1": {
+        "id": 2,
+        "name": "Mercurio",
+        "symbol": "☿",
+        "longitude": 37.97457096591934
+      },
+      "planet2": {
+        "id": 10,
+        "name": "Nodo Norte",
+        "symbol": "☊",
+        "longitude": 310.24684079243997
+      },
+      "aspect": "Cuadratura",
+      "aspect_symbol": "□",
+      "angle": 90,
+      "orb": 2.272269826520642,
+      "max_orb": 8,
+      "nature": "challenging",
+      "exact_angle": 87.72773017347936,
+      "applying": false
+    },
+    {
+      "planet1": {
+        "id": 4,
+        "name": "Marte",
+        "symbol": "♂",
+        "longitude": 348.5968740536154
+      },
+      "planet2": {
+        "id": 9,
+        "name": "Plutón",
+        "symbol": "♇",
+        "longitude": 226.15762894633235
+      },
+      "aspect": "Trígono",
+      "aspect_symbol": "△",
+      "angle": 120,
+      "orb": 2.4392451072830568,
+      "max_orb": 8,
+      "nature": "harmonious",
+      "exact_angle": 122.43924510728306,
+      "applying": true
+    },
+    {
+      "planet1": {
+        "id": 3,
+        "name": "Venus",
+        "symbol": "♀",
+        "longitude": 13.222395389331822
+      },
+      "planet2": {
+        "id": 10,
+        "name": "Nodo Norte",
+        "symbol": "☊",
+        "longitude": 310.24684079243997
+      },
+      "aspect": "Sextil",
+      "aspect_symbol": "⚹",
+      "angle": 60,
+      "orb": 2.975554596891868,
+      "max_orb": 6,
+      "nature": "harmonious",
+      "exact_angle": 62.97555459689187,
+      "applying": false
+    },
+    {
+      "planet1": {
+        "id": 3,
+        "name": "Venus",
+        "symbol": "♀",
+        "longitude": 13.222395389331822
+      },
+      "planet2": {
+        "id": 5,
+        "name": "Júpiter",
+        "symbol": "♃",
+        "longitude": 99.60877584914809
+      },
+      "aspect": "Cuadratura",
+      "aspect_symbol": "□",
+      "angle": 90,
+      "orb": 3.613619540183734,
+      "max_orb": 8,
+      "nature": "challenging",
+      "exact_angle": 86.38638045981627,
+      "applying": false
+    },
+    {
+      "planet1": {
+        "id": 3,
+        "name": "Venus",
+        "symbol": "♀",
+        "longitude": 13.222395389331822
+      },
+      "planet2": {
+        "id": 7,
+        "name": "Urano",
+        "symbol": "♅",
+        "longitude": 279.17516573167694
+      },
+      "aspect": "Cuadratura",
+      "aspect_symbol": "□",
+      "angle": 90,
+      "orb": 4.047229657654896,
+      "max_orb": 8,
+      "nature": "challenging",
+      "exact_angle": 94.0472296576549,
+      "applying": true
+    },
+    {
+      "planet1": {
+        "id": 4,
+        "name": "Marte",
+        "symbol": "♂",
+        "longitude": 348.5968740536154
+      },
+      "planet2": {
+        "id": 8,
+        "name": "Neptuno",
+        "symbol": "♆",
+        "longitude": 284.34766286081936
+      },
+      "aspect": "Sextil",
+      "aspect_symbol": "⚹",
+      "angle": 60,
+      "orb": 4.249211192796054,
+      "max_orb": 6,
+      "nature": "harmonious",
+      "exact_angle": 64.24921119279605,
+      "applying": true
+    },
+    {
+      "planet1": {
+        "id": 5,
+        "name": "Júpiter",
+        "symbol": "♃",
+        "longitude": 99.60877584914809
+      },
+      "planet2": {
+        "id": 8,
+        "name": "Neptuno",
+        "symbol": "♆",
+        "longitude": 284.34766286081936
+      },
+      "aspect": "Oposición",
+      "aspect_symbol": "☍",
+      "angle": 180,
+      "orb": 4.738887011671267,
+      "max_orb": 8,
+      "nature": "challenging",
+      "exact_angle": 175.26111298832873,
+      "applying": false
+    },
+    {
+      "planet1": {
+        "id": 7,
+        "name": "Urano",
+        "symbol": "♅",
+        "longitude": 279.17516573167694
+      },
+      "planet2": {
+        "id": 8,
+        "name": "Neptuno",
+        "symbol": "♆",
+        "longitude": 284.34766286081936
+      },
+      "aspect": "Conjunción",
+      "aspect_symbol": "☌",
+      "angle": 0,
+      "orb": 5.172497129142414,
+      "max_orb": 8,
+      "nature": "neutral",
+      "exact_angle": 5.172497129142414,
+      "applying": false
+    },
+    {
+      "planet1": {
+        "id": 9,
+        "name": "Plutón",
+        "symbol": "♇",
+        "longitude": 226.15762894633235
+      },
+      "planet2": {
+        "id": 10,
+        "name": "Nodo Norte",
+        "symbol": "☊",
+        "longitude": 310.24684079243997
+      },
+      "aspect": "Cuadratura",
+      "aspect_symbol": "□",
+      "angle": 90,
+      "orb": 5.910788153892383,
+      "max_orb": 8,
+      "nature": "challenging",
+      "exact_angle": 84.08921184610762,
+      "applying": false
+    },
+    {
+      "planet1": {
+        "id": 1,
+        "name": "Luna",
+        "symbol": "☽",
+        "longitude": 301.55246887370896
+      },
+      "planet2": {
+        "id": 6,
+        "name": "Saturno",
+        "symbol": "♄",
+        "longitude": 295.24335851173214
+      },
+      "aspect": "Conjunción",
+      "aspect_symbol": "☌",
+      "angle": 0,
+      "orb": 6.3091103619768205,
+      "max_orb": 8,
+      "nature": "neutral",
+      "exact_angle": 6.3091103619768205,
+      "applying": true
+    },
+    {
+      "planet1": {
+        "id": 2,
+        "name": "Mercurio",
+        "symbol": "☿",
+        "longitude": 37.97457096591934
+      },
+      "planet2": {
+        "id": 8,
+        "name": "Neptuno",
+        "symbol": "♆",
+        "longitude": 284.34766286081936
+      },
+      "aspect": "Trígono",
+      "aspect_symbol": "△",
+      "angle": 120,
+      "orb": 6.373091894900028,
+      "max_orb": 8,
+      "nature": "harmonious",
+      "exact_angle": 113.62690810509997,
+      "applying": true
+    },
+    {
+      "planet1": {
+        "id": 1,
+        "name": "Luna",
+        "symbol": "☽",
+        "longitude": 301.55246887370896
+      },
+      "planet2": {
+        "id": 2,
+        "name": "Mercurio",
+        "symbol": "☿",
+        "longitude": 37.97457096591934
+      },
+      "aspect": "Cuadratura",
+      "aspect_symbol": "□",
+      "angle": 90,
+      "orb": 6.422102092210366,
+      "max_orb": 8,
+      "nature": "challenging",
+      "exact_angle": 96.42210209221037,
+      "applying": true
+    },
+    {
+      "planet1": {
+        "id": 5,
+        "name": "Júpiter",
+        "symbol": "♃",
+        "longitude": 99.60877584914809
+      },
+      "planet2": {
+        "id": 9,
+        "name": "Plutón",
+        "symbol": "♇",
+        "longitude": 226.15762894633235
+      },
+      "aspect": "Trígono",
+      "aspect_symbol": "△",
+      "angle": 120,
+      "orb": 6.548853097184264,
+      "max_orb": 8,
+      "nature": "harmonious",
+      "exact_angle": 126.54885309718426,
+      "applying": true
+    },
+    {
+      "planet1": {
+        "id": 0,
+        "name": "Sol",
+        "symbol": "☉",
+        "longitude": 54.73758999222477
+      },
+      "planet2": {
+        "id": 1,
+        "name": "Luna",
+        "symbol": "☽",
+        "longitude": 301.55246887370896
+      },
+      "aspect": "Trígono",
+      "aspect_symbol": "△",
+      "angle": 120,
+      "orb": 6.814878881484191,
+      "max_orb": 8,
+      "nature": "harmonious",
+      "exact_angle": 113.18512111851581,
+      "applying": true
+    }
+  ],
+  "chart_summary": {
+    "ascendant": {
+      "longitude": 172.1323275122244,
+      "sign": "Virgo",
+      "sign_symbol": "♍",
+      "degree_in_sign": 22.132327512224407
+    },
+    "midheaven": {
+      "longitude": 82.35094956171643,
+      "sign": "Géminis",
+      "sign_symbol": "♊",
+      "degree_in_sign": 22.350949561716433
+    },
+    "sun_sign": "Tauro",
+    "moon_sign": "Acuario",
+    "elements": {
+      "Fuego": 1,
+      "Tierra": 5,
+      "Aire": 1,
+      "Agua": 3
+    },
+    "dominant_element": "Tierra",
+    "aspect_counts": {
+      "harmonious": 10,
+      "challenging": 8,
+      "neutral": 2,
+      "minor": 4
+    },
+    "total_aspects": 24,
+    "retrograde_planets": [
+      "Mercurio",
+      "Saturno",
+      "Urano",
+      "Neptuno",
+      "Plutón"
+    ]
+  }
+}

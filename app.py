@@ -81,8 +81,10 @@ def create_app(config_class=Config):
                 'Gestión de lecturas',
                 'Suscripciones',
                 'Cálculos astrológicos precisos',
-                'Carta natal completa',
-                'Interpretaciones con IA'
+                'Cartas Natales Astrológicas',
+                'Sistemas de Casas',
+                'Aspectos Planetarios',
+                'Interpretaciones con IA (Gemini)'
             ]
         }), 200
     

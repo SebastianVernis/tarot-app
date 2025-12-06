@@ -1,473 +1,587 @@
 """
-Módulo de cálculos astrológicos precisos
-Utiliza Swiss Ephemeris para cálculos de posiciones planetarias
+Módulo de cálculos astrológicos avanzados
+Implementa sistemas de casas y detección de aspectos planetarios
 """
 import swisseph as swe
 from datetime import datetime
 from typing import Dict, List, Tuple, Optional
 import pytz
-from timezonefinder import TimezoneFinder
 import math
 
 
-class AstrologyCalculator:
-    """Calculadora de posiciones planetarias y carta natal"""
+class HouseSystem:
+    """Sistemas de casas astrológicas"""
+    PLACIDUS = 'P'  # Sistema Placidus (más popular)
+    KOCH = 'K'      # Sistema Koch
+    EQUAL = 'E'     # Casas Iguales (Equal House)
+    WHOLE_SIGN = 'W'  # Signos Completos
+    CAMPANUS = 'C'  # Campanus
+    REGIOMONTANUS = 'R'  # Regiomontanus
+
+
+class Planet:
+    """Constantes para planetas y puntos astrológicos"""
+    SUN = 0
+    MOON = 1
+    MERCURY = 2
+    VENUS = 3
+    MARS = 4
+    JUPITER = 5
+    SATURN = 6
+    URANUS = 7
+    NEPTUNE = 8
+    PLUTO = 9
+    NORTH_NODE = 10  # Nodo Norte (Rahu)
+    SOUTH_NODE = 11  # Nodo Sur (Ketu)
     
-    # Planetas a calcular (códigos Swiss Ephemeris)
-    PLANETS = {
-        'sun': swe.SUN,
-        'moon': swe.MOON,
-        'mercury': swe.MERCURY,
-        'venus': swe.VENUS,
-        'mars': swe.MARS,
-        'jupiter': swe.JUPITER,
-        'saturn': swe.SATURN,
-        'uranus': swe.URANUS,
-        'neptune': swe.NEPTUNE,
-        'pluto': swe.PLUTO
+    NAMES = {
+        0: "Sol", 1: "Luna", 2: "Mercurio", 3: "Venus",
+        4: "Marte", 5: "Júpiter", 6: "Saturno", 7: "Urano",
+        8: "Neptuno", 9: "Plutón", 10: "Nodo Norte", 11: "Nodo Sur"
     }
     
-    # Nombres en español
-    PLANET_NAMES_ES = {
-        'sun': 'Sol',
-        'moon': 'Luna',
-        'mercury': 'Mercurio',
-        'venus': 'Venus',
-        'mars': 'Marte',
-        'jupiter': 'Júpiter',
-        'saturn': 'Saturno',
-        'uranus': 'Urano',
-        'neptune': 'Neptuno',
-        'pluto': 'Plutón'
+    SYMBOLS = {
+        0: "☉", 1: "☽", 2: "☿", 3: "♀",
+        4: "♂", 5: "♃", 6: "♄", 7: "♅",
+        8: "♆", 9: "♇", 10: "☊", 11: "☋"
     }
+
+
+class Aspect:
+    """Tipos de aspectos astrológicos"""
+    # Aspectos mayores
+    CONJUNCTION = {"name": "Conjunción", "angle": 0, "orb": 8, "symbol": "☌", "nature": "neutral"}
+    SEXTILE = {"name": "Sextil", "angle": 60, "orb": 6, "symbol": "⚹", "nature": "harmonious"}
+    SQUARE = {"name": "Cuadratura", "angle": 90, "orb": 8, "symbol": "□", "nature": "challenging"}
+    TRINE = {"name": "Trígono", "angle": 120, "orb": 8, "symbol": "△", "nature": "harmonious"}
+    OPPOSITION = {"name": "Oposición", "angle": 180, "orb": 8, "symbol": "☍", "nature": "challenging"}
     
-    # Signos zodiacales
-    ZODIAC_SIGNS = [
-        'Aries', 'Tauro', 'Géminis', 'Cáncer', 'Leo', 'Virgo',
-        'Libra', 'Escorpio', 'Sagitario', 'Capricornio', 'Acuario', 'Piscis'
+    # Aspectos menores
+    SEMI_SEXTILE = {"name": "Semi-sextil", "angle": 30, "orb": 2, "symbol": "⚺", "nature": "minor"}
+    SEMI_SQUARE = {"name": "Semi-cuadratura", "angle": 45, "orb": 2, "symbol": "∠", "nature": "minor"}
+    SESQUIQUADRATE = {"name": "Sesquicuadratura", "angle": 135, "orb": 2, "symbol": "⚼", "nature": "minor"}
+    QUINCUNX = {"name": "Quincuncio", "angle": 150, "orb": 2, "symbol": "⚻", "nature": "minor"}
+    
+    ALL_ASPECTS = [
+        CONJUNCTION, SEXTILE, SQUARE, TRINE, OPPOSITION,
+        SEMI_SEXTILE, SEMI_SQUARE, SESQUIQUADRATE, QUINCUNX
     ]
     
-    # Símbolos de signos
-    ZODIAC_SYMBOLS = {
-        'Aries': '♈', 'Tauro': '♉', 'Géminis': '♊', 'Cáncer': '♋',
-        'Leo': '♌', 'Virgo': '♍', 'Libra': '♎', 'Escorpio': '♏',
-        'Sagitario': '♐', 'Capricornio': '♑', 'Acuario': '♒', 'Piscis': '♓'
-    }
+    MAJOR_ASPECTS = [CONJUNCTION, SEXTILE, SQUARE, TRINE, OPPOSITION]
+    MINOR_ASPECTS = [SEMI_SEXTILE, SEMI_SQUARE, SESQUIQUADRATE, QUINCUNX]
+
+
+class ZodiacSign:
+    """Signos zodiacales"""
+    SIGNS = [
+        {"name": "Aries", "symbol": "♈", "element": "Fuego", "quality": "Cardinal"},
+        {"name": "Tauro", "symbol": "♉", "element": "Tierra", "quality": "Fijo"},
+        {"name": "Géminis", "symbol": "♊", "element": "Aire", "quality": "Mutable"},
+        {"name": "Cáncer", "symbol": "♋", "element": "Agua", "quality": "Cardinal"},
+        {"name": "Leo", "symbol": "♌", "element": "Fuego", "quality": "Fijo"},
+        {"name": "Virgo", "symbol": "♍", "element": "Tierra", "quality": "Mutable"},
+        {"name": "Libra", "symbol": "♎", "element": "Aire", "quality": "Cardinal"},
+        {"name": "Escorpio", "symbol": "♏", "element": "Agua", "quality": "Fijo"},
+        {"name": "Sagitario", "symbol": "♐", "element": "Fuego", "quality": "Mutable"},
+        {"name": "Capricornio", "symbol": "♑", "element": "Tierra", "quality": "Cardinal"},
+        {"name": "Acuario", "symbol": "♒", "element": "Aire", "quality": "Fijo"},
+        {"name": "Piscis", "symbol": "♓", "element": "Agua", "quality": "Mutable"}
+    ]
     
-    # Elementos
-    ELEMENTS = {
-        'Aries': 'Fuego', 'Leo': 'Fuego', 'Sagitario': 'Fuego',
-        'Tauro': 'Tierra', 'Virgo': 'Tierra', 'Capricornio': 'Tierra',
-        'Géminis': 'Aire', 'Libra': 'Aire', 'Acuario': 'Aire',
-        'Cáncer': 'Agua', 'Escorpio': 'Agua', 'Piscis': 'Agua'
-    }
-    
-    # Modalidades
-    MODALITIES = {
-        'Aries': 'Cardinal', 'Cáncer': 'Cardinal', 'Libra': 'Cardinal', 'Capricornio': 'Cardinal',
-        'Tauro': 'Fijo', 'Leo': 'Fijo', 'Escorpio': 'Fijo', 'Acuario': 'Fijo',
-        'Géminis': 'Mutable', 'Virgo': 'Mutable', 'Sagitario': 'Mutable', 'Piscis': 'Mutable'
-    }
+    @staticmethod
+    def get_sign(longitude: float) -> Dict:
+        """Obtiene el signo zodiacal para una longitud dada"""
+        sign_index = int(longitude / 30)
+        degree_in_sign = longitude % 30
+        sign_info = ZodiacSign.SIGNS[sign_index].copy()
+        sign_info['degree'] = degree_in_sign
+        return sign_info
+
+
+class AstrologyCalculator:
+    """Calculadora principal de astrología"""
     
     def __init__(self):
         """Inicializa el calculador astrológico"""
-        # Configurar Swiss Ephemeris para usar datos incluidos
-        swe.set_ephe_path(None)  # Usa datos incluidos en la biblioteca
-        self.tf = TimezoneFinder()
+        # Configurar la ruta de los archivos efemerides de Swiss Ephemeris
+        # Por defecto usa los archivos incluidos en pyswisseph
+        swe.set_ephe_path(None)
     
-    def get_timezone(self, latitude: float, longitude: float) -> str:
-        """Obtiene la zona horaria basada en coordenadas"""
-        try:
-            tz_name = self.tf.timezone_at(lat=latitude, lng=longitude)
-            return tz_name if tz_name else 'UTC'
-        except Exception:
-            return 'UTC'
-    
-    def datetime_to_julian_day(self, dt: datetime) -> float:
-        """Convierte datetime a día juliano"""
-        year = dt.year
-        month = dt.month
-        day = dt.day
-        hour = dt.hour + dt.minute / 60.0 + dt.second / 3600.0
-        
-        jd = swe.julday(year, month, day, hour)
-        return jd
-    
-    def degrees_to_dms(self, degrees: float) -> Tuple[int, int, int]:
-        """Convierte grados decimales a grados, minutos, segundos"""
-        d = int(degrees)
-        m = int((degrees - d) * 60)
-        s = int(((degrees - d) * 60 - m) * 60)
-        return d, m, s
-    
-    def position_to_zodiac(self, longitude: float) -> Dict:
-        """Convierte longitud eclíptica a signo zodiacal con grados"""
-        # Normalizar a 0-360
-        longitude = longitude % 360
-        
-        # Calcular signo (cada signo = 30 grados)
-        sign_index = int(longitude / 30)
-        sign = self.ZODIAC_SIGNS[sign_index]
-        
-        # Grados dentro del signo
-        degrees_in_sign = longitude % 30
-        deg, min, sec = self.degrees_to_dms(degrees_in_sign)
-        
-        return {
-            'sign': sign,
-            'symbol': self.ZODIAC_SYMBOLS[sign],
-            'degrees': deg,
-            'minutes': min,
-            'seconds': sec,
-            'absolute_position': longitude,
-            'element': self.ELEMENTS[sign],
-            'modality': self.MODALITIES[sign],
-            'formatted': f"{sign} {deg}° {min}' {sec}\""
-        }
-    
-    def calculate_planet_position(self, planet_code: int, julian_day: float) -> Dict:
-        """Calcula la posición de un planeta"""
-        try:
-            # Calcular posición (geocéntrica, tropical)
-            result = swe.calc_ut(julian_day, planet_code)
-            longitude = result[0][0]  # Longitud eclíptica
-            latitude = result[0][1]   # Latitud eclíptica
-            distance = result[0][2]   # Distancia
-            speed = result[0][3]      # Velocidad
-            
-            # Convertir a signo zodiacal
-            zodiac_info = self.position_to_zodiac(longitude)
-            
-            # Determinar si está retrógrado
-            is_retrograde = speed < 0
-            
-            return {
-                'longitude': longitude,
-                'latitude': latitude,
-                'distance': distance,
-                'speed': speed,
-                'is_retrograde': is_retrograde,
-                'zodiac': zodiac_info
-            }
-        except Exception as e:
-            raise Exception(f"Error calculando posición planetaria: {str(e)}")
-    
-    def calculate_houses(self, julian_day: float, latitude: float, longitude: float) -> Dict:
-        """Calcula las casas astrológicas y puntos importantes"""
-        try:
-            # Calcular casas usando sistema Placidus (más común)
-            houses, ascmc = swe.houses(julian_day, latitude, longitude, b'P')
-            
-            # Ascendente (ASC)
-            ascendant = ascmc[0]
-            asc_zodiac = self.position_to_zodiac(ascendant)
-            
-            # Medio Cielo (MC)
-            midheaven = ascmc[1]
-            mc_zodiac = self.position_to_zodiac(midheaven)
-            
-            # Descendente (DSC) - opuesto al ascendente
-            descendant = (ascendant + 180) % 360
-            dsc_zodiac = self.position_to_zodiac(descendant)
-            
-            # Fondo del Cielo (IC) - opuesto al MC
-            imum_coeli = (midheaven + 180) % 360
-            ic_zodiac = self.position_to_zodiac(imum_coeli)
-            
-            # Casas (12 casas)
-            house_cusps = []
-            for i, house_cusp in enumerate(houses, 1):
-                house_cusps.append({
-                    'house': i,
-                    'cusp': house_cusp,
-                    'zodiac': self.position_to_zodiac(house_cusp)
-                })
-            
-            return {
-                'ascendant': {
-                    'position': ascendant,
-                    'zodiac': asc_zodiac
-                },
-                'midheaven': {
-                    'position': midheaven,
-                    'zodiac': mc_zodiac
-                },
-                'descendant': {
-                    'position': descendant,
-                    'zodiac': dsc_zodiac
-                },
-                'imum_coeli': {
-                    'position': imum_coeli,
-                    'zodiac': ic_zodiac
-                },
-                'houses': house_cusps
-            }
-        except Exception as e:
-            raise Exception(f"Error calculando casas: {str(e)}")
-    
-    def calculate_aspects(self, positions: Dict) -> List[Dict]:
-        """Calcula aspectos entre planetas"""
-        aspects = []
-        
-        # Definir aspectos y sus orbes
-        aspect_definitions = {
-            'Conjunción': (0, 8),
-            'Oposición': (180, 8),
-            'Trígono': (120, 8),
-            'Cuadratura': (90, 8),
-            'Sextil': (60, 6),
-            'Quincuncio': (150, 3),
-            'Semisextil': (30, 3)
-        }
-        
-        planet_list = list(positions.keys())
-        
-        for i, planet1 in enumerate(planet_list):
-            for planet2 in planet_list[i+1:]:
-                pos1 = positions[planet1]['longitude']
-                pos2 = positions[planet2]['longitude']
-                
-                # Calcular diferencia angular
-                diff = abs(pos1 - pos2)
-                if diff > 180:
-                    diff = 360 - diff
-                
-                # Verificar cada tipo de aspecto
-                for aspect_name, (angle, orb) in aspect_definitions.items():
-                    if abs(diff - angle) <= orb:
-                        aspects.append({
-                            'planet1': self.PLANET_NAMES_ES[planet1],
-                            'planet2': self.PLANET_NAMES_ES[planet2],
-                            'aspect': aspect_name,
-                            'angle': angle,
-                            'actual_angle': round(diff, 2),
-                            'orb': round(abs(diff - angle), 2)
-                        })
-        
-        return aspects
-    
-    def calculate_birth_chart(
-        self,
-        birth_date: datetime,
-        latitude: float,
-        longitude: float,
-        timezone_str: Optional[str] = None
-    ) -> Dict:
+    def calculate_julian_day(self, dt: datetime, timezone_str: str = 'UTC') -> float:
         """
-        Calcula la carta natal completa
+        Calcula el día juliano para una fecha/hora dada
         
         Args:
-            birth_date: Fecha y hora de nacimiento (datetime)
-            latitude: Latitud del lugar de nacimiento
-            longitude: Longitud del lugar de nacimiento
-            timezone_str: Zona horaria (opcional, se detecta automáticamente)
+            dt: Fecha y hora
+            timezone_str: Zona horaria (ej: 'America/Mexico_City', 'Europe/Madrid')
         
         Returns:
-            Diccionario con toda la información de la carta natal
+            Día juliano
         """
-        try:
-            # Obtener zona horaria si no se proporciona
-            if not timezone_str:
-                timezone_str = self.get_timezone(latitude, longitude)
-            
-            # Convertir a UTC si tiene zona horaria
-            if birth_date.tzinfo is None:
-                # Asumir que está en la zona horaria local
-                local_tz = pytz.timezone(timezone_str)
-                birth_date = local_tz.localize(birth_date)
-            
-            birth_date_utc = birth_date.astimezone(pytz.UTC)
-            
-            # Convertir a día juliano
-            julian_day = self.datetime_to_julian_day(birth_date_utc)
-            
-            # Calcular posiciones planetarias
-            planetary_positions = {}
-            for planet_key, planet_code in self.PLANETS.items():
-                position = self.calculate_planet_position(planet_code, julian_day)
-                planetary_positions[planet_key] = position
-            
-            # Calcular casas y puntos importantes
-            houses_data = self.calculate_houses(julian_day, latitude, longitude)
-            
-            # Calcular aspectos
-            aspects = self.calculate_aspects(planetary_positions)
-            
-            # Crear resumen de planetas por signo
-            planets_by_sign = {}
-            for planet_key, position in planetary_positions.items():
-                sign = position['zodiac']['sign']
-                planet_name = self.PLANET_NAMES_ES[planet_key]
-                
-                if sign not in planets_by_sign:
-                    planets_by_sign[sign] = []
-                
-                planets_by_sign[sign].append({
-                    'planet': planet_name,
-                    'position': position['zodiac']['formatted'],
-                    'retrograde': position['is_retrograde']
-                })
-            
-            # Calcular elemento dominante
-            element_count = {}
-            for position in planetary_positions.values():
-                element = position['zodiac']['element']
-                element_count[element] = element_count.get(element, 0) + 1
-            
-            dominant_element = max(element_count, key=element_count.get)
-            
-            # Calcular modalidad dominante
-            modality_count = {}
-            for position in planetary_positions.values():
-                modality = position['zodiac']['modality']
-                modality_count[modality] = modality_count.get(modality, 0) + 1
-            
-            dominant_modality = max(modality_count, key=modality_count.get)
-            
-            return {
-                'birth_data': {
-                    'date': birth_date.isoformat(),
-                    'date_utc': birth_date_utc.isoformat(),
-                    'latitude': latitude,
-                    'longitude': longitude,
-                    'timezone': timezone_str,
-                    'julian_day': julian_day
-                },
-                'planets': {
-                    planet_key: {
-                        'name': self.PLANET_NAMES_ES[planet_key],
-                        'position': position['zodiac']['formatted'],
-                        'sign': position['zodiac']['sign'],
-                        'symbol': position['zodiac']['symbol'],
-                        'degrees': position['zodiac']['degrees'],
-                        'minutes': position['zodiac']['minutes'],
-                        'element': position['zodiac']['element'],
-                        'modality': position['zodiac']['modality'],
-                        'retrograde': position['is_retrograde'],
-                        'longitude': position['longitude']
-                    }
-                    for planet_key, position in planetary_positions.items()
-                },
-                'houses': houses_data,
-                'aspects': aspects,
-                'summary': {
-                    'sun_sign': planetary_positions['sun']['zodiac']['sign'],
-                    'moon_sign': planetary_positions['moon']['zodiac']['sign'],
-                    'rising_sign': houses_data['ascendant']['zodiac']['sign'],
-                    'dominant_element': dominant_element,
-                    'dominant_modality': dominant_modality,
-                    'element_distribution': element_count,
-                    'modality_distribution': modality_count,
-                    'planets_by_sign': planets_by_sign,
-                    'retrograde_planets': [
-                        self.PLANET_NAMES_ES[k] for k, v in planetary_positions.items()
-                        if v['is_retrograde']
-                    ]
-                }
-            }
-        except Exception as e:
-            raise Exception(f"Error calculando carta natal: {str(e)}")
+        # Convertir a UTC si tiene zona horaria
+        if dt.tzinfo is None:
+            tz = pytz.timezone(timezone_str)
+            dt = tz.localize(dt)
+        
+        dt_utc = dt.astimezone(pytz.UTC)
+        
+        # Calcular día juliano
+        jd = swe.julday(
+            dt_utc.year,
+            dt_utc.month,
+            dt_utc.day,
+            dt_utc.hour + dt_utc.minute / 60.0 + dt_utc.second / 3600.0
+        )
+        
+        return jd
     
-    def calculate_planetary_positions(
-        self,
-        date: datetime,
-        latitude: float,
-        longitude: float
-    ) -> Dict:
+    def calculate_planetary_positions(self, jd: float) -> Dict[int, Dict]:
         """
-        Calcula solo las posiciones planetarias (versión simplificada)
+        Calcula las posiciones de todos los planetas
         
         Args:
-            date: Fecha y hora
-            latitude: Latitud
-            longitude: Longitud
+            jd: Día juliano
         
         Returns:
             Diccionario con posiciones planetarias
         """
-        try:
-            # Convertir a UTC
-            if date.tzinfo is None:
-                timezone_str = self.get_timezone(latitude, longitude)
-                local_tz = pytz.timezone(timezone_str)
-                date = local_tz.localize(date)
+        positions = {}
+        
+        # Planetas principales
+        planets = [
+            Planet.SUN, Planet.MOON, Planet.MERCURY, Planet.VENUS,
+            Planet.MARS, Planet.JUPITER, Planet.SATURN, Planet.URANUS,
+            Planet.NEPTUNE, Planet.PLUTO
+        ]
+        
+        for planet_id in planets:
+            # Calcular posición
+            result, ret_flag = swe.calc_ut(jd, planet_id)
             
-            date_utc = date.astimezone(pytz.UTC)
-            julian_day = self.datetime_to_julian_day(date_utc)
+            longitude = result[0]  # Longitud eclíptica
+            latitude = result[1]   # Latitud eclíptica
+            distance = result[2]   # Distancia
+            speed = result[3]      # Velocidad
             
-            # Calcular posiciones
-            positions = {}
-            for planet_key, planet_code in self.PLANETS.items():
-                position = self.calculate_planet_position(planet_code, julian_day)
-                positions[planet_key] = {
-                    'name': self.PLANET_NAMES_ES[planet_key],
-                    'sign': position['zodiac']['sign'],
-                    'position': position['zodiac']['formatted'],
-                    'degrees': position['zodiac']['degrees'],
-                    'minutes': position['zodiac']['minutes'],
-                    'retrograde': position['is_retrograde']
-                }
+            # Determinar si está retrógrado
+            is_retrograde = speed < 0
             
-            return {
-                'date': date.isoformat(),
-                'location': {
-                    'latitude': latitude,
-                    'longitude': longitude
-                },
-                'positions': positions
+            # Obtener signo zodiacal
+            sign_info = ZodiacSign.get_sign(longitude)
+            
+            positions[planet_id] = {
+                'name': Planet.NAMES[planet_id],
+                'symbol': Planet.SYMBOLS[planet_id],
+                'longitude': longitude,
+                'latitude': latitude,
+                'distance': distance,
+                'speed': speed,
+                'retrograde': is_retrograde,
+                'sign': sign_info['name'],
+                'sign_symbol': sign_info['symbol'],
+                'degree_in_sign': sign_info['degree'],
+                'element': sign_info['element'],
+                'quality': sign_info['quality']
             }
-        except Exception as e:
-            raise Exception(f"Error calculando posiciones: {str(e)}")
+        
+        # Calcular Nodo Norte
+        result, ret_flag = swe.calc_ut(jd, swe.TRUE_NODE)
+        longitude = result[0]
+        sign_info = ZodiacSign.get_sign(longitude)
+        
+        positions[Planet.NORTH_NODE] = {
+            'name': Planet.NAMES[Planet.NORTH_NODE],
+            'symbol': Planet.SYMBOLS[Planet.NORTH_NODE],
+            'longitude': longitude,
+            'sign': sign_info['name'],
+            'sign_symbol': sign_info['symbol'],
+            'degree_in_sign': sign_info['degree']
+        }
+        
+        return positions
+    
+    def calculate_houses(
+        self,
+        jd: float,
+        latitude: float,
+        longitude: float,
+        house_system: str = HouseSystem.PLACIDUS
+    ) -> Dict:
+        """
+        Calcula las casas astrológicas
+        
+        Args:
+            jd: Día juliano
+            latitude: Latitud del lugar de nacimiento
+            longitude: Longitud del lugar de nacimiento
+            house_system: Sistema de casas a usar
+        
+        Returns:
+            Diccionario con información de las casas
+        """
+        # Calcular casas
+        cusps, ascmc = swe.houses(jd, latitude, longitude, house_system.encode())
+        
+        # cusps es una tupla con 13 elementos (índices 0-12, donde 0 no se usa en algunos sistemas)
+        # ascmc contiene: [Ascendente, MC, ARMC, Vertex, Equatorial Ascendant, ...]
+        
+        houses = {}
+        # Swiss Ephemeris devuelve cusps con índice 0 no usado, casas 1-12 en índices 1-12
+        # Pero algunas versiones pueden devolver solo 12 elementos (0-11)
+        for i in range(1, 13):
+            # Ajustar índice según la longitud de cusps
+            cusp_index = i if len(cusps) > 12 else i - 1
+            cusp_longitude = cusps[cusp_index]
+            sign_info = ZodiacSign.get_sign(cusp_longitude)
+            
+            houses[i] = {
+                'number': i,
+                'cusp_longitude': cusp_longitude,
+                'sign': sign_info['name'],
+                'sign_symbol': sign_info['symbol'],
+                'degree_in_sign': sign_info['degree'],
+                'element': sign_info['element']
+            }
+        
+        # Puntos importantes
+        ascendant = ascmc[0]
+        mc = ascmc[1]  # Medium Coeli (Medio Cielo)
+        
+        asc_sign = ZodiacSign.get_sign(ascendant)
+        mc_sign = ZodiacSign.get_sign(mc)
+        
+        return {
+            'houses': houses,
+            'ascendant': {
+                'longitude': ascendant,
+                'sign': asc_sign['name'],
+                'sign_symbol': asc_sign['symbol'],
+                'degree_in_sign': asc_sign['degree']
+            },
+            'midheaven': {
+                'longitude': mc,
+                'sign': mc_sign['name'],
+                'sign_symbol': mc_sign['symbol'],
+                'degree_in_sign': mc_sign['degree']
+            },
+            'house_system': house_system
+        }
+    
+    def assign_planets_to_houses(
+        self,
+        planetary_positions: Dict[int, Dict],
+        houses: Dict
+    ) -> Dict[int, List[Dict]]:
+        """
+        Asigna planetas a sus casas correspondientes
+        
+        Args:
+            planetary_positions: Posiciones planetarias
+            houses: Información de las casas
+        
+        Returns:
+            Diccionario con planetas por casa
+        """
+        planets_in_houses = {i: [] for i in range(1, 13)}
+        
+        house_cusps = houses['houses']
+        
+        for planet_id, planet_data in planetary_positions.items():
+            planet_longitude = planet_data['longitude']
+            
+            # Determinar en qué casa está el planeta
+            house_number = self._find_house_for_planet(planet_longitude, house_cusps)
+            
+            planets_in_houses[house_number].append({
+                'planet_id': planet_id,
+                'name': planet_data['name'],
+                'symbol': planet_data['symbol'],
+                'longitude': planet_longitude,
+                'sign': planet_data['sign'],
+                'degree_in_sign': planet_data['degree_in_sign']
+            })
+        
+        return planets_in_houses
+    
+    def _find_house_for_planet(self, planet_longitude: float, house_cusps: Dict) -> int:
+        """
+        Encuentra la casa en la que está un planeta
+        
+        Args:
+            planet_longitude: Longitud del planeta
+            house_cusps: Cúspides de las casas
+        
+        Returns:
+            Número de casa (1-12)
+        """
+        # Normalizar longitud a 0-360
+        planet_long = planet_longitude % 360
+        
+        for i in range(1, 13):
+            cusp_start = house_cusps[i]['cusp_longitude']
+            
+            # Siguiente cúspide (casa 13 = casa 1)
+            next_house = (i % 12) + 1
+            cusp_end = house_cusps[next_house]['cusp_longitude']
+            
+            # Manejar el caso cuando cruza 0° Aries
+            if cusp_start > cusp_end:
+                if planet_long >= cusp_start or planet_long < cusp_end:
+                    return i
+            else:
+                if cusp_start <= planet_long < cusp_end:
+                    return i
+        
+        return 1  # Por defecto, casa 1
+    
+    def calculate_aspects(
+        self,
+        planetary_positions: Dict[int, Dict],
+        include_minor: bool = True
+    ) -> List[Dict]:
+        """
+        Calcula aspectos entre planetas
+        
+        Args:
+            planetary_positions: Posiciones planetarias
+            include_minor: Incluir aspectos menores
+        
+        Returns:
+            Lista de aspectos detectados
+        """
+        aspects_list = []
+        
+        # Aspectos a considerar
+        aspects_to_check = Aspect.ALL_ASPECTS if include_minor else Aspect.MAJOR_ASPECTS
+        
+        # Obtener lista de planetas
+        planet_ids = list(planetary_positions.keys())
+        
+        # Comparar cada par de planetas
+        for i in range(len(planet_ids)):
+            for j in range(i + 1, len(planet_ids)):
+                planet1_id = planet_ids[i]
+                planet2_id = planet_ids[j]
+                
+                planet1 = planetary_positions[planet1_id]
+                planet2 = planetary_positions[planet2_id]
+                
+                # Calcular diferencia angular
+                angle_diff = abs(planet1['longitude'] - planet2['longitude'])
+                
+                # Normalizar a 0-180
+                if angle_diff > 180:
+                    angle_diff = 360 - angle_diff
+                
+                # Verificar cada tipo de aspecto
+                for aspect_type in aspects_to_check:
+                    target_angle = aspect_type['angle']
+                    orb = aspect_type['orb']
+                    
+                    # Calcular diferencia con el ángulo del aspecto
+                    diff = abs(angle_diff - target_angle)
+                    
+                    # Si está dentro del orbe, es un aspecto válido
+                    if diff <= orb:
+                        aspects_list.append({
+                            'planet1': {
+                                'id': planet1_id,
+                                'name': planet1['name'],
+                                'symbol': planet1['symbol'],
+                                'longitude': planet1['longitude']
+                            },
+                            'planet2': {
+                                'id': planet2_id,
+                                'name': planet2['name'],
+                                'symbol': planet2['symbol'],
+                                'longitude': planet2['longitude']
+                            },
+                            'aspect': aspect_type['name'],
+                            'aspect_symbol': aspect_type['symbol'],
+                            'angle': target_angle,
+                            'orb': diff,
+                            'max_orb': orb,
+                            'nature': aspect_type['nature'],
+                            'exact_angle': angle_diff,
+                            'applying': self._is_applying(planet1, planet2, angle_diff, target_angle)
+                        })
+        
+        # Ordenar por orbe (aspectos más exactos primero)
+        aspects_list.sort(key=lambda x: x['orb'])
+        
+        return aspects_list
+    
+    def _is_applying(
+        self,
+        planet1: Dict,
+        planet2: Dict,
+        current_angle: float,
+        target_angle: float
+    ) -> bool:
+        """
+        Determina si un aspecto está aplicando (acercándose) o separando
+        
+        Args:
+            planet1: Datos del primer planeta
+            planet2: Datos del segundo planeta
+            current_angle: Ángulo actual entre planetas
+            target_angle: Ángulo del aspecto
+        
+        Returns:
+            True si está aplicando, False si está separando
+        """
+        # Si alguno no tiene velocidad, no podemos determinar
+        if 'speed' not in planet1 or 'speed' not in planet2:
+            return False
+        
+        # Velocidad relativa
+        relative_speed = planet1['speed'] - planet2['speed']
+        
+        # Si la velocidad relativa reduce la diferencia con el ángulo objetivo, está aplicando
+        return relative_speed < 0 if current_angle < target_angle else relative_speed > 0
+    
+    def calculate_birth_chart(
+        self,
+        birth_datetime: datetime,
+        latitude: float,
+        longitude: float,
+        timezone_str: str = 'UTC',
+        house_system: str = HouseSystem.PLACIDUS,
+        include_minor_aspects: bool = True
+    ) -> Dict:
+        """
+        Calcula una carta natal completa
+        
+        Args:
+            birth_datetime: Fecha y hora de nacimiento
+            latitude: Latitud del lugar de nacimiento
+            longitude: Longitud del lugar de nacimiento
+            timezone_str: Zona horaria
+            house_system: Sistema de casas
+            include_minor_aspects: Incluir aspectos menores
+        
+        Returns:
+            Carta natal completa con planetas, casas y aspectos
+        """
+        # Calcular día juliano
+        jd = self.calculate_julian_day(birth_datetime, timezone_str)
+        
+        # Calcular posiciones planetarias
+        planetary_positions = self.calculate_planetary_positions(jd)
+        
+        # Calcular casas
+        houses = self.calculate_houses(jd, latitude, longitude, house_system)
+        
+        # Asignar planetas a casas
+        planets_in_houses = self.assign_planets_to_houses(planetary_positions, houses)
+        
+        # Calcular aspectos
+        aspects = self.calculate_aspects(planetary_positions, include_minor_aspects)
+        
+        return {
+            'birth_data': {
+                'datetime': birth_datetime.isoformat(),
+                'timezone': timezone_str,
+                'latitude': latitude,
+                'longitude': longitude,
+                'julian_day': jd
+            },
+            'planetary_positions': planetary_positions,
+            'houses': houses,
+            'planets_in_houses': planets_in_houses,
+            'aspects': aspects,
+            'chart_summary': self._generate_chart_summary(
+                planetary_positions,
+                houses,
+                planets_in_houses,
+                aspects
+            )
+        }
+    
+    def _generate_chart_summary(
+        self,
+        planetary_positions: Dict,
+        houses: Dict,
+        planets_in_houses: Dict,
+        aspects: List[Dict]
+    ) -> Dict:
+        """
+        Genera un resumen de la carta natal
+        
+        Returns:
+            Resumen con estadísticas y puntos clave
+        """
+        # Contar elementos
+        elements = {'Fuego': 0, 'Tierra': 0, 'Aire': 0, 'Agua': 0}
+        for planet_data in planetary_positions.values():
+            if 'element' in planet_data:
+                elements[planet_data['element']] += 1
+        
+        # Elemento dominante
+        dominant_element = max(elements, key=elements.get)
+        
+        # Contar aspectos por naturaleza
+        aspect_counts = {'harmonious': 0, 'challenging': 0, 'neutral': 0, 'minor': 0}
+        for aspect in aspects:
+            aspect_counts[aspect['nature']] += 1
+        
+        return {
+            'ascendant': houses['ascendant'],
+            'midheaven': houses['midheaven'],
+            'sun_sign': planetary_positions[Planet.SUN]['sign'],
+            'moon_sign': planetary_positions[Planet.MOON]['sign'],
+            'elements': elements,
+            'dominant_element': dominant_element,
+            'aspect_counts': aspect_counts,
+            'total_aspects': len(aspects),
+            'retrograde_planets': [
+                p['name'] for p in planetary_positions.values()
+                if p.get('retrograde', False)
+            ]
+        }
 
 
-# Función de utilidad para pruebas rápidas
-def test_calculation():
-    """Función de prueba con fecha conocida"""
-    calc = AstrologyCalculator()
+# Funciones de utilidad para uso rápido
+def calculate_houses_and_aspects(
+    birth_datetime: datetime,
+    latitude: float,
+    longitude: float,
+    timezone_str: str = 'UTC',
+    house_system: str = HouseSystem.PLACIDUS
+) -> Dict:
+    """
+    Función de conveniencia para calcular casas y aspectos
     
-    # Fecha de prueba: 1 de enero de 2000, 00:00 UTC
-    test_date = datetime(2000, 1, 1, 0, 0, 0, tzinfo=pytz.UTC)
+    Args:
+        birth_datetime: Fecha y hora de nacimiento
+        latitude: Latitud del lugar
+        longitude: Longitud del lugar
+        timezone_str: Zona horaria
+        house_system: Sistema de casas
     
-    # Ciudad de México
-    latitude = 19.4326
-    longitude = -99.1332
-    
-    print("Calculando carta natal de prueba...")
-    print(f"Fecha: {test_date}")
-    print(f"Ubicación: Ciudad de México ({latitude}, {longitude})")
-    print("-" * 60)
-    
-    try:
-        chart = calc.calculate_birth_chart(test_date, latitude, longitude)
-        
-        print("\n=== POSICIONES PLANETARIAS ===")
-        for planet_key, planet_data in chart['planets'].items():
-            retro = " (R)" if planet_data['retrograde'] else ""
-            print(f"{planet_data['name']}: {planet_data['position']}{retro}")
-        
-        print("\n=== PUNTOS IMPORTANTES ===")
-        print(f"Ascendente: {chart['houses']['ascendant']['zodiac']['formatted']}")
-        print(f"Medio Cielo: {chart['houses']['midheaven']['zodiac']['formatted']}")
-        
-        print("\n=== RESUMEN ===")
-        print(f"Signo Solar: {chart['summary']['sun_sign']}")
-        print(f"Signo Lunar: {chart['summary']['moon_sign']}")
-        print(f"Signo Ascendente: {chart['summary']['rising_sign']}")
-        print(f"Elemento Dominante: {chart['summary']['dominant_element']}")
-        print(f"Modalidad Dominante: {chart['summary']['dominant_modality']}")
-        
-        if chart['summary']['retrograde_planets']:
-            print(f"\nPlanetas Retrógrados: {', '.join(chart['summary']['retrograde_planets'])}")
-        
-        print("\n=== ASPECTOS PRINCIPALES ===")
-        for aspect in chart['aspects'][:5]:  # Mostrar solo los primeros 5
-            print(f"{aspect['planet1']} {aspect['aspect']} {aspect['planet2']} (orbe: {aspect['orb']}°)")
-        
-        print("\n✓ Cálculo exitoso!")
-        
-    except Exception as e:
-        print(f"\n✗ Error: {str(e)}")
+    Returns:
+        Carta natal completa
+    """
+    calculator = AstrologyCalculator()
+    return calculator.calculate_birth_chart(
+        birth_datetime,
+        latitude,
+        longitude,
+        timezone_str,
+        house_system
+    )
 
 
-if __name__ == "__main__":
-    test_calculation()
+def find_aspects(planetary_positions: Dict, include_minor: bool = True) -> List[Dict]:
+    """
+    Función de conveniencia para encontrar aspectos
+    
+    Args:
+        planetary_positions: Posiciones planetarias
+        include_minor: Incluir aspectos menores
+    
+    Returns:
+        Lista de aspectos
+    """
+    calculator = AstrologyCalculator()
+    return calculator.calculate_aspects(planetary_positions, include_minor)
