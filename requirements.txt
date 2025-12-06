@@ -1,3 +1,20 @@
 numpy>=1.21.0
 matplotlib>=3.5.0
 scipy>=1.8.0
+
+# Flask y extensiones
+Flask>=2.3.0
+Flask-SQLAlchemy>=3.0.0
+Flask-JWT-Extended>=4.5.0
+Flask-CORS>=4.0.0
+Flask-Migrate>=4.0.0
+
+# Base de datos
+SQLAlchemy>=2.0.0
+
+# Seguridad
+Werkzeug>=2.3.0
+PyJWT>=2.8.0
+
+# Utilidades
+python-dotenv>=1.0.0

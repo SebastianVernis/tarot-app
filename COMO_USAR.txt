@@ -1,0 +1,195 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║                                                                      ║
+║              🔮 TAROT MÍSTICO v2.0 - CÓMO USAR 🔮                   ║
+║                                                                      ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+✅ EL SERVIDOR YA ESTÁ CORRIENDO
+
+📍 URLs Importantes:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🌐 Aplicación Web:
+   http://localhost:5000/tarot_web_v2.html
+
+🔌 API Base:
+   http://localhost:5000/api
+
+💚 Health Check:
+   http://localhost:5000/api/health
+
+ℹ️  API Info:
+   http://localhost:5000/api/info
+
+
+👤 USUARIOS DE PRUEBA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📧 Usuario Gratuito:
+   Email:    demo@tarot.com
+   Password: demo123
+   Plan:     Free (3 lecturas/día)
+
+✨ Usuario Premium:
+   Email:    premium@tarot.com
+   Password: premium123
+   Plan:     Premium (ilimitado)
+
+
+🎯 PASOS PARA USAR LA APLICACIÓN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Abrir navegador en:
+   http://localhost:5000/tarot_web_v2.html
+
+2. Hacer clic en "Iniciar Sesión" o "Registrarse"
+
+3. Usar uno de los usuarios de prueba o crear cuenta nueva
+
+4. Explorar las funcionalidades:
+   • Cambiar tema (toggle en el header)
+   • Seleccionar tipo de tirada
+   • Realizar lecturas
+   • Ver estadísticas de uso
+   • Probar upgrade a premium
+
+
+🎨 CAMBIAR TEMA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Hacer clic en el toggle de tema en el header
+   (🌙 para oscuro, ☀️ para claro)
+
+2. El tema se guarda automáticamente en:
+   • localStorage (cliente)
+   • Base de datos (servidor)
+
+3. Se sincroniza entre dispositivos
+
+
+💎 PROBAR SISTEMA FREEMIUM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Con usuario FREE (demo@tarot.com):
+1. Intentar seleccionar "Cruz Celta" o "Herradura"
+2. Ver mensaje de bloqueo (🔒)
+3. Hacer clic en "Actualizar a Premium"
+4. Confirmar upgrade (demo - gratis)
+5. Ahora puedes acceder a todas las tiradas
+
+
+📊 VER ESTADÍSTICAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Indicador de uso en el header
+• Muestra lecturas restantes (usuarios free)
+• Muestra "Premium - Ilimitado" (usuarios premium)
+
+
+🧪 PROBAR LA API
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Ejecutar suite de pruebas:
+   cd /vercel/sandbox
+   python3 test_api.py
+
+Probar con curl:
+   # Health check
+   curl http://localhost:5000/api/health
+
+   # Login
+   curl -X POST http://localhost:5000/api/auth/login \
+     -H "Content-Type: application/json" \
+     -d '{"email":"demo@tarot.com","password":"demo123"}'
+
+
+📚 DOCUMENTACIÓN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📖 Documentación Completa:
+   README_V2.md
+
+⚡ Guía Rápida:
+   GUIA_RAPIDA.md
+
+📋 Resumen de Implementación:
+   RESUMEN_IMPLEMENTACION.md
+
+📝 Este archivo:
+   COMO_USAR.txt
+
+
+🔧 COMANDOS ÚTILES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Verificar servidor:
+   ps aux | grep "python3 app.py"
+
+Reiniciar servidor:
+   pkill -f "python3 app.py"
+   cd /vercel/sandbox && python3 app.py &
+
+Reiniciar base de datos:
+   rm tarot.db
+   python3 init_db.py
+
+Ver logs del servidor:
+   tail -f /vercel/sandbox/.blackbox/tmp/shell_tool_*.log
+
+
+🎯 FUNCIONALIDADES IMPLEMENTADAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Sistema de autenticación JWT
+✅ Persistencia de sesiones
+✅ Cambio de tema (claro/oscuro)
+✅ Sistema freemium (Free/Premium)
+✅ Límites de uso diario
+✅ Gestión de lecturas
+✅ Historial completo
+✅ API REST (23 endpoints)
+✅ Base de datos SQLite
+✅ Frontend responsive
+✅ Usuarios de prueba
+
+
+🐛 TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Problema: No puedo acceder a la aplicación
+Solución: Verificar que el servidor esté corriendo en puerto 5000
+
+Problema: Error de autenticación
+Solución: Hacer logout y login nuevamente
+
+Problema: No se guarda el tema
+Solución: Verificar que estés autenticado
+
+Problema: No puedo crear lecturas
+Solución: Verificar límites de uso (usuarios free: 3/día)
+
+
+💡 TIPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Usa el usuario premium para probar todas las funcionalidades
+• El tema se sincroniza automáticamente entre dispositivos
+• Los límites de uso se resetean cada día
+• Puedes crear múltiples cuentas para probar
+• El upgrade a premium es instantáneo (modo demo)
+
+
+🎉 ¡LISTO PARA USAR!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+El sistema está completamente funcional y listo para usar.
+
+Abre tu navegador en:
+👉 http://localhost:5000/tarot_web_v2.html
+
+¡Disfruta de tu lectura de tarot! 🔮✨
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Desarrollado con ❤️ para Tarot Místico
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
