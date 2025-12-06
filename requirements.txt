@@ -19,9 +19,10 @@ PyJWT>=2.8.0
 # Utilidades
 python-dotenv>=1.0.0
 
-# Astrología y cálculos astronómicos
+# Astrología
 pyswisseph>=2.10.3.2
+timezonefinder>=6.2.0
 pytz>=2023.3
 
-# IA - Google Gemini
+# Gemini AI
 google-generativeai>=0.3.0

@@ -30,5 +30,7 @@ class Config:
     GEMINI_MODEL = os.environ.get('GEMINI_MODEL', 'gemini-pro')
     
     # Astrology Configuration
+    ASTROLOGY_ENABLED = True
+    FREE_ASTROLOGY_READINGS = 2  # Lecturas astrológicas gratuitas por día
     DEFAULT_HOUSE_SYSTEM = os.environ.get('DEFAULT_HOUSE_SYSTEM', 'P')  # Placidus por defecto
     INCLUDE_MINOR_ASPECTS = os.environ.get('INCLUDE_MINOR_ASPECTS', 'true').lower() == 'true'

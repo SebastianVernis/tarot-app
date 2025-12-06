@@ -80,6 +80,7 @@ def create_app(config_class=Config):
                 'Persistencia de temas',
                 'Gestión de lecturas',
                 'Suscripciones',
+                'Cálculos astrológicos precisos',
                 'Cartas Natales Astrológicas',
                 'Sistemas de Casas',
                 'Aspectos Planetarios',
