@@ -182,3 +182,77 @@ class Subscription(db.Model):
             'currency': self.currency,
             'created_at': self.created_at.isoformat()
         }
+
+
+class AstrologyReading(db.Model):
+    """Modelo para lecturas astrológicas y cartas natales"""
+    __tablename__ = 'astrology_readings'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
+    
+    # Datos de nacimiento
+    birth_date = db.Column(db.DateTime, nullable=False)
+    birth_latitude = db.Column(db.Float, nullable=False)
+    birth_longitude = db.Column(db.Float, nullable=False)
+    birth_timezone = db.Column(db.String(50), nullable=True)
+    birth_location_name = db.Column(db.String(200), nullable=True)
+    
+    # Tipo de lectura
+    reading_type = db.Column(db.String(50), default='birth_chart')  # 'birth_chart', 'transit', 'compatibility'
+    
+    # Datos calculados (JSON)
+    chart_data = db.Column(db.Text, nullable=False)  # JSON con posiciones planetarias completas
+    
+    # Interpretación generada por IA
+    interpretation = db.Column(db.Text, nullable=True)
+    
+    # Resumen rápido
+    sun_sign = db.Column(db.String(20), nullable=True)
+    moon_sign = db.Column(db.String(20), nullable=True)
+    rising_sign = db.Column(db.String(20), nullable=True)
+    
+    # Metadata
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+    is_favorite = db.Column(db.Boolean, default=False)
+    notes = db.Column(db.Text, nullable=True)
+    
+    # Relación
+    user = db.relationship('User', backref='astrology_readings')
+    
+    def set_chart_data(self, chart_dict):
+        """Guarda los datos de la carta como JSON"""
+        self.chart_data = json.dumps(chart_dict, ensure_ascii=False)
+    
+    def get_chart_data(self):
+        """Obtiene los datos de la carta desde JSON"""
+        return json.loads(self.chart_data) if self.chart_data else {}
+    
+    def to_dict(self, include_full_chart=False):
+        """Convierte la lectura astrológica a diccionario"""
+        data = {
+            'id': self.id,
+            'user_id': self.user_id,
+            'birth_date': self.birth_date.isoformat(),
+            'birth_location': {
+                'latitude': self.birth_latitude,
+                'longitude': self.birth_longitude,
+                'timezone': self.birth_timezone,
+                'name': self.birth_location_name
+            },
+            'reading_type': self.reading_type,
+            'summary': {
+                'sun_sign': self.sun_sign,
+                'moon_sign': self.moon_sign,
+                'rising_sign': self.rising_sign
+            },
+            'interpretation': self.interpretation,
+            'created_at': self.created_at.isoformat(),
+            'is_favorite': self.is_favorite,
+            'notes': self.notes
+        }
+        
+        if include_full_chart:
+            data['chart_data'] = self.get_chart_data()
+        
+        return data

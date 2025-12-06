@@ -24,3 +24,10 @@ class Config:
     
     # Pagination
     READINGS_PER_PAGE = 20
+    
+    # Gemini API Configuration
+    GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
+    
+    # Astrology Configuration
+    ASTROLOGY_ENABLED = True
+    FREE_ASTROLOGY_READINGS = 2  # Lecturas astrológicas gratuitas por día

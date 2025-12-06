@@ -38,6 +38,10 @@ def login_required(fn):
     @wraps(fn)
     def wrapper(*args, **kwargs):
         verify_jwt_in_request()
+        # Convertir identity a int si es string
+        user_id = get_jwt_identity()
+        if isinstance(user_id, str):
+            user_id = int(user_id)
         return fn(*args, **kwargs)
     return wrapper
 
@@ -73,8 +77,8 @@ def create_tokens(user):
     user.last_login = datetime.utcnow()
     db.session.commit()
     
-    access_token = create_access_token(identity=user.id)
-    refresh_token = create_refresh_token(identity=user.id)
+    access_token = create_access_token(identity=str(user.id))
+    refresh_token = create_refresh_token(identity=str(user.id))
     
     return {
         'access_token': access_token,
