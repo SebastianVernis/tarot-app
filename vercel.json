@@ -1,44 +1,24 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "api/index.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "50mb"
-      }
-    },
-    {
-      "src": "tarot_web.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "tarot_web.js",
-      "use": "@vercel/static"
+  "functions": {
+    "api/index.py": {
+      "memory": 1024,
+      "maxDuration": 30,
+      "runtime": "python3.11@0.2.25"
     }
-  ],
-  "rewrites": [
+  },
+  "redirects": [
     {
       "source": "/api/(.*)",
       "destination": "/api/index.py"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/index.py"
     },
     {
-      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|json))",
-      "dest": "/$1"
+      "source": "/",
+      "destination": "/tarot_web.html"
     },
     {
-      "src": "/",
-      "dest": "/tarot_web.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/tarot_web.html"
+      "source": "/(.*)",
+      "destination": "/tarot_web.html"
     }
   ],
   "env": {
@@ -46,32 +26,5 @@
     "PYTHONPATH": "/var/task",
     "PYTHON_VERSION": "3.11"
   },
-  "functions": {
-    "api/index.py": {
-      "memory": 1024,
-      "maxDuration": 30,
-      "runtime": "python3.11"
-    }
-  },
-  "regions": ["iad1"],
-  "headers": [
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico))",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    }
-  ]
+  "regions": ["iad1"]
 }
