@@ -9,11 +9,11 @@
       }
     },
     {
-      "src": "tarot_web.html",
+      "src": "public/tarot_web.html",
       "use": "@vercel/static"
     },
     {
-      "src": "tarot_web.js",
+      "src": "public/tarot_web.js",
       "use": "@vercel/static"
     }
   ],
@@ -30,15 +30,15 @@
     },
     {
       "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|json))",
-      "dest": "/$1"
+      "dest": "/public/$1"
     },
     {
       "src": "/",
-      "dest": "/tarot_web.html"
+      "dest": "/public/tarot_web.html"
     },
     {
       "src": "/(.*)",
-      "dest": "/tarot_web.html"
+      "dest": "/public/tarot_web.html"
     }
   ],
   "env": {

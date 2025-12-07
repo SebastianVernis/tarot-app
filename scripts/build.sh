@@ -4,6 +4,9 @@
 
 set -e  # Exit on error
 
+# Change to project root directory
+cd "$(dirname "$0")/.."
+
 echo "🔮 Tarot App - Vercel Build Validation"
 echo "========================================"
 echo ""
@@ -166,14 +169,14 @@ fi
 
 # 8. Check static files
 print_info "Checking static files..."
-if [ ! -f "tarot_web.html" ]; then
-    print_warning "tarot_web.html not found"
+if [ ! -f "public/tarot_web.html" ]; then
+    print_warning "public/tarot_web.html not found"
 else
     print_success "Frontend HTML found"
 fi
 
-if [ ! -f "tarot_web.js" ]; then
-    print_warning "tarot_web.js not found"
+if [ ! -f "public/tarot_web.js" ]; then
+    print_warning "public/tarot_web.js not found"
 else
     print_success "Frontend JavaScript found"
 fi
