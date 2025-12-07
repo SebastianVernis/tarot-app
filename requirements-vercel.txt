@@ -24,12 +24,12 @@ pytz==2023.3
 # Gemini AI
 google-generativeai==0.3.2
 
-# REMOVED HEAVY DEPENDENCIES FOR VERCEL:
+# REMOVED HEAVY DEPENDENCIES:
 # - numpy (50-80 MB) - not needed for basic tarot readings
 # - matplotlib (100-150 MB) - not needed for API
 # - scipy (80-100 MB) - not needed for basic functionality
 # - pyswisseph (20-30 MB) - astrology features will be optional/disabled
 # - timezonefinder (large data files) - use pytz only
 
-# Note: For full features including astrology, deploy to Render instead
-# See requirements-original.txt for full dependencies
+# Note: Astrology features requiring pyswisseph will be disabled
+# or moved to a separate microservice if needed
