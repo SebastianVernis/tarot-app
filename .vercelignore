@@ -1,33 +1,60 @@
-# Vercel Ignore File
-# Exclude files that don't need to be deployed
+# Documentation
+docs/
+*.md
+!README.md
 
-# Python cache
+# Scripts
+scripts/
+
+# Tests
+tests/
+test_*.py
+*_test.py
+
+# Utilities
+utils/
+
+# Assets (images not needed for deployment)
+assets/
+
+# Legacy files
+public/legacy/
+
+# Python
 __pycache__/
-*.py[cod]
-*$py.class
-*.so
+*.pyc
+*.pyo
+*.pyd
 .Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+htmlcov/
 
 # Virtual environments
 venv/
 env/
 ENV/
+.venv
 
-# Testing files
-test_*.py
-*_test.py
-test_*.json
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
 
-# Documentation (except deployment guides)
-*.md
-!VERCEL_DEPLOYMENT_FIX.md
-!README.md
+# Git
+.git/
+.gitignore
+.gitattributes
 
-# Original requirements (we use optimized version)
-requirements-original.txt
-requirements-vercel.txt
-
-# Database files (use environment variable for production)
+# Database
 *.db
 *.sqlite
 *.sqlite3
@@ -35,60 +62,16 @@ instance/
 
 # Logs
 *.log
+logs/
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
+# Environment
+.env.local
+.env.*.local
 
-# Git
-.git/
-.gitignore
-
-# Images (unless needed for frontend)
-*.png
-*.jpg
-*.jpeg
-comparacion_barajado.png
-distribucion_cartas.png
-
-# Deployment configs for other platforms
+# Render specific
 render.yaml
-deploy.sh
 
-# Analysis and documentation
-ANALISIS_*.md
-ISSUE_*.md
-RESUMEN_*.md
-RANDOMNESS_*.md
-SURGICAL_*.md
-CRUSH.md
-DEPLOYMENT.md
-DEPLOYMENT_STATUS.md
-RENDER_DEPLOY.md
-ASTROLOGY_*.md
-GUIA_RAPIDA.md
-COMO_USAR.txt
-
-# Standalone Python scripts not needed for web
-tarot_reader.py
-tarot_reader_enhanced.py
-tarot_quantum_random.py
-tarot_secure_random.py
-tarot_randomness_test.py
-sistema_esoterico_expandido.py
-init_db.py
-get-pip.py
-
-# Test results
-reporte_*.json
-test_results_*.json
-test_birth_chart_result.json
-
-# Alternative HTML versions (keep only main one)
-tarot_web_v2.html
-tarot_web_v2.js
-tarot_web_pro.html
-tarot_web_pro.js
-index.html
+# Backup files
+*.bak
+*.backup
+*.old

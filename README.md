@@ -1,362 +1,224 @@
-# 🔮 Sistema de Lectura de Tarot
+# 🔮 Tarot App - Mystical Card Reading Platform
 
-> Un sistema completo de lectura de tarot con múltiples capas de aleatorización y verificación de calidad.
+A modern, full-stack web application for Tarot card readings with AI-powered interpretations, user authentication, and subscription management.
 
-## 📋 Descripción
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/tarot-app)
 
-Este proyecto implementa un sistema de lectura de tarot que simula la experiencia de una lectura real mediante:
+## ✨ Features
 
-- **Múltiples fuentes de aleatoriedad**: Pseudo-aleatoria, criptográfica, simulación cuántica
-- **Verificación de calidad**: Sistema de análisis estadístico en tiempo real
-- **Múltiples tipos de tiradas**: Una carta, tres cartas, Cruz Celta, Herradura, Relación
-- **Interfaz web moderna**: Diseño místico con animaciones y efectos visuales
-- **Mazo completo**: 78 cartas (22 Arcanos Mayores + 56 Arcanos Menores)
+- **🎴 Tarot Readings**: Multiple spread types (Single Card, 3-Card, Celtic Cross, etc.)
+- **🤖 AI Interpretations**: Powered by Google Gemini AI for personalized readings
+- **👤 User Authentication**: Secure JWT-based authentication system
+- **💳 Subscription Management**: Free and Premium tiers with reading limits
+- **📊 Reading History**: Track and review past readings
+- **🎨 Theme Support**: Light/Dark mode with persistent preferences
+- **📱 Responsive Design**: Works seamlessly on desktop and mobile devices
 
-## 🚀 Características
+## 🚀 Quick Start
 
-### ✨ Funcionalidades Principales
+### Prerequisites
 
-- **Lecturas interactivas** con interpretaciones personalizadas
-- **Sistema de aleatorización verificada** con múltiples algoritmos
-- **Análisis estadístico** de la calidad de aleatoriedad
-- **Interfaz web responsiva** con efectos visuales
-- **Historial de lecturas** en formato JSON
-- **Múltiples tipos de tirada** para diferentes consultas
+- Python 3.9+
+- Node.js 22+ (for Vercel CLI)
+- PostgreSQL (optional, SQLite used by default)
 
-### 🎲 Tipos de Aleatorización
+### Local Development
 
-- **Pseudo-random**: Generador estándar de Python
-- **Crypto-random**: Módulo `secrets` para aleatoriedad criptográfica
-- **Hardware-random**: `SystemRandom` usando entropía del OS
-- **Quantum-simulated**: Simulación de comportamiento cuántico
-- **Combinado**: Fusión de múltiples fuentes para máxima entropía
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd tarot-app
+   ```
 
-### 🃏 Tipos de Tiradas
+2. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-1. **Una Carta del Día** - Guía diaria (1 carta)
-2. **Pasado, Presente y Futuro** - Visión temporal (3 cartas)
-3. **Cruz Celta** - Análisis completo (10 cartas)
-4. **Herradura** - Situación y consejo (7 cartas)
-5. **Lectura de Relación** - Análisis de vínculos (6 cartas)
-6. **Lectura de Amor** - Análisis profundo de vida amorosa (7 cartas)
-7. **Lectura Anual** - Visión de 12 meses, una carta por mes (12 cartas)
-8. **Lectura de Decisión** - Ayuda para elegir entre dos opciones (5 cartas)
-9. **Lectura de Chakras** - Análisis energético de los 7 chakras (7 cartas)
+3. **Set environment variables**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your configuration
+   ```
 
-## 📁 Estructura del Proyecto
+4. **Run the application**
+   ```bash
+   python app.py
+   ```
+
+5. **Open in browser**
+   ```
+   http://localhost:5000
+   ```
+
+### Deploy to Vercel
+
+1. **Install Vercel CLI**
+   ```bash
+   npm i -g vercel
+   ```
+
+2. **Login to Vercel**
+   ```bash
+   vercel login
+   ```
+
+3. **Validate build**
+   ```bash
+   ./scripts/build.sh
+   ```
+
+4. **Deploy**
+   ```bash
+   vercel --prod
+   ```
+
+5. **Set environment variables**
+   ```bash
+   vercel env add SECRET_KEY
+   vercel env add JWT_SECRET_KEY
+   vercel env add GEMINI_API_KEY
+   vercel env add DATABASE_URL  # Optional
+   ```
+
+## 📁 Project Structure
 
 ```
 tarot-app/
-├── tarot_reader.py              # Lector básico de tarot
-├── tarot_reader_enhanced.py     # Versión mejorada con alta aleatorización
-├── tarot_quantum_random.py      # Generador cuántico simulado
-├── tarot_randomness_test.py     # Suite de pruebas estadísticas
-├── tarot_web.html              # Interfaz web principal
-├── tarot_web.js                # Lógica JavaScript
-├── README.md                   # Este archivo
-├── CRUSH.md                    # Configuración para agentes de código
-└── DEPLOYMENT.md               # Guía de despliegue
+├── api/                    # Vercel serverless functions
+│   └── index.py           # WSGI entry point
+├── routes/                # Flask route blueprints
+│   ├── auth.py           # Authentication routes
+│   ├── tarot.py          # Tarot reading routes
+│   └── subscription.py   # Subscription routes
+├── docs/                  # Documentation
+│   ├── VERCEL_QUICK_START.md
+│   ├── DEPLOYMENT_READY_VERCEL.md
+│   └── ...
+├── scripts/               # Build and deployment scripts
+│   ├── build.sh          # Validation script
+│   ├── deploy.sh         # Deployment script
+│   └── deploy-vercel.sh  # Vercel-specific deployment
+├── assets/                # Images and static assets
+├── app.py                # Main Flask application
+├── config.py             # Configuration management
+├── auth.py               # Authentication logic
+├── tarot_web.html        # Frontend HTML
+├── tarot_web.js          # Frontend JavaScript
+├── requirements.txt      # Python dependencies
+├── vercel.json           # Vercel configuration
+└── README.md             # This file
 ```
 
-## 🛠️ Instalación
+## 🔧 Configuration
 
-### Prerrequisitos
+### Environment Variables
 
-- Python 3.8 o superior
-- Navegador web moderno (para la interfaz web)
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `SECRET_KEY` | Flask secret key for sessions | ✅ Yes |
+| `JWT_SECRET_KEY` | JWT token signing key | ✅ Yes |
+| `GEMINI_API_KEY` | Google Gemini API key for AI interpretations | ✅ Yes |
+| `DATABASE_URL` | PostgreSQL connection string | ❌ No (SQLite default) |
+| `FLASK_ENV` | Environment (development/production) | ❌ No |
 
-### Dependencias Python
+### Database
 
+- **Development**: SQLite (automatic, no setup required)
+- **Production**: PostgreSQL recommended (set `DATABASE_URL`)
+- **Vercel**: In-memory SQLite (stateless, for testing only)
+
+## 📚 Documentation
+
+- **[Quick Start Guide](docs/VERCEL_QUICK_START.md)** - Get started in 3 steps
+- **[Deployment Guide](docs/DEPLOYMENT_READY_VERCEL.md)** - Complete deployment instructions
+- **[Build Guide](docs/VERCEL_BUILD_GUIDE.md)** - Comprehensive build documentation
+- **[API Documentation](docs/COMO_USAR.txt)** - API endpoints and usage
+
+## 🧪 Testing
+
+### Run Build Validation
 ```bash
-pip install numpy matplotlib scipy
+./scripts/build.sh
 ```
 
-### Instalación Rápida
-
+### Test API Endpoints
 ```bash
-# Clonar el repositorio
-git clone <repository-url>
-cd tarot-app
+# Health check
+curl http://localhost:5000/api/health
 
-# Instalar dependencias
-pip install -r requirements.txt  # Si existe
-# O instalar manualmente:
-pip install numpy matplotlib scipy
-
-# Verificar instalación
-python tarot_reader.py
+# Get tarot cards
+curl http://localhost:5000/api/tarot/cards
 ```
 
-## 🎮 Uso
-
-### Modo Consola
-
-#### Lector Básico
-```bash
-python tarot_reader.py
-```
-
-#### Lector Mejorado (Recomendado)
-```bash
-python tarot_reader_enhanced.py
-```
-
-#### Generador Cuántico
-```bash
-python tarot_quantum_random.py
-```
-
-#### Pruebas de Calidad
-```bash
-python tarot_randomness_test.py
-```
-
-### Interfaz Web
-
-1. Abrir `tarot_web.html` en un navegador
-2. Seleccionar tipo de tirada
-3. Opcional: Escribir una pregunta
-4. Hacer clic en "Comenzar Lectura"
-5. Esperar la animación de barajado
-6. Revisar los resultados
-
-## 🧪 Pruebas y Verificación
-
-El sistema incluye múltiples pruebas estadísticas para garantizar **aleatoriedad 100% verificada**:
-
-### Pruebas Implementadas
-
-1. **Distribución Uniforme** - Chi-cuadrado para verificar que todas las cartas tienen igual probabilidad
-2. **Independencia Secuencial** - Correlación de Pearson para asegurar que las cartas son independientes
-3. **Entropía de Shannon** - Medida de aleatoriedad (objetivo: >7.5 bits de 8 bits máximos)
-4. **Balance de Bits** - Prueba binomial para cartas invertidas (objetivo: 50/50)
-5. **Impredecibilidad** - Análisis de patrones para detectar secuencias predecibles
-6. **Velocidad** - Benchmark de rendimiento de diferentes métodos
-7. **Hardware** - Verificación de fuentes de entropía del sistema
-8. **Tipos de Tirada** - Verifica aleatoriedad en todos los 9 tipos de lectura
-9. **Invertidas por Tipo** - Verifica balance 50/50 en cada tipo de tirada
-10. **Cobertura** - Calcula cobertura de pruebas (objetivo: >90%)
-
-### Algoritmos de Aleatoriedad Utilizados
-
-El sistema utiliza **múltiples capas de aleatoriedad** para garantizar la máxima calidad:
-
-1. **`secrets.randbelow()`** - Generador criptográficamente seguro (CSPRNG)
-   - Utiliza fuentes de entropía del sistema operativo
-   - Adecuado para aplicaciones de seguridad
-   - Implementa el estándar FIPS 140-2
-
-2. **`random.SystemRandom()`** - Entropía del sistema operativo
-   - Accede a `/dev/urandom` en Linux/Unix
-   - Usa `CryptGenRandom()` en Windows
-   - No utiliza semillas predecibles
-
-3. **`os.urandom()`** - Fuente de entropía del kernel
-   - Acceso directo a la entropía del sistema
-   - Recolecta ruido de hardware (timing, interrupciones, etc.)
-
-4. **Método Combinado con Votación**
-   - Combina múltiples fuentes de aleatoriedad
-   - Usa votación por mayoría para máxima robustez
-   - Protege contra fallos de una sola fuente
-
-5. **Fisher-Yates Shuffle**
-   - Algoritmo de barajado uniforme probado matemáticamente
-   - Garantiza que todas las permutaciones son equiprobables
-   - Complejidad O(n) óptima
-
-6. **Transposiciones Aleatorias Adicionales**
-   - Mezcla adicional usando `secrets` para mayor seguridad
-   - Simula el barajado físico real
-   - Múltiples rondas de mezcla (7 barajadas por defecto)
-
-### Garantía de Calidad
-
-- ✅ **Cobertura de pruebas: >90%**
-- ✅ **Calidad de aleatoriedad: >90%**
-- ✅ **Todos los tipos de tirada verificados**
-- ✅ **Balance 50/50 en cartas invertidas**
-- ✅ **Distribución uniforme en todas las cartas**
-- ✅ **Independencia entre cartas consecutivas**
-
-### Ejecutar Pruebas
-
-```bash
-# Suite completa de pruebas de aleatoriedad
-python tarot_randomness_test.py
-
-# El sistema ejecutará 10 pruebas diferentes:
-# 1. Distribución uniforme (10,000 muestras)
-# 2. Independencia secuencial (5,000 pares)
-# 3. Entropía de Shannon (10,000 bytes)
-# 4. Patrones de cartas invertidas (10,000 muestras)
-# 5. Impredecibilidad de secuencias (1,000 intentos)
-# 6. Velocidad de generación (100,000 operaciones)
-# 7. Fuentes de hardware del sistema
-# 8. Aleatoriedad en todos los tipos de tirada
-# 9. Balance de invertidas por tipo
-# 10. Cálculo de cobertura de pruebas
-
-# Genera archivos:
-# - reporte_aleatoriedad.json (reporte detallado con >90% calidad)
-# - distribucion_cartas.png (visualización de distribución)
-# - comparacion_barajado.png (comparación de métodos)
-```
+### Test Frontend
+Open `http://localhost:5000` in your browser and test:
+- User registration/login
+- Card readings (all spread types)
+- Theme switching
+- Reading history
 
-### Interpretar Resultados
-
-El reporte JSON incluye:
-- **Porcentaje de éxito**: Debe ser >90% para garantizar aleatoriedad 100%
-- **Cobertura**: Debe ser >90% para cumplir requisitos
-- **Calificación**: EXCELENTE (>90%), BUENO (>80%), REGULAR (>60%), MEJORABLE (<60%)
-- **Detalles por prueba**: Valores p, correlaciones, entropía, etc.
+## 🛠️ Technology Stack
 
-## 📊 Salida y Resultados
+### Backend
+- **Flask** - Web framework
+- **SQLAlchemy** - ORM
+- **Flask-JWT-Extended** - Authentication
+- **Google Gemini AI** - AI interpretations
 
-### Archivos Generados
+### Frontend
+- **Vanilla JavaScript** - No framework dependencies
+- **HTML5/CSS3** - Modern, responsive design
+- **Fetch API** - RESTful API communication
 
-- **lecturas_tarot.json**: Historial de lecturas guardadas
-- **reporte_aleatoriedad.json**: Análisis estadístico detallado
-- **distribucion_cartas.png**: Gráfico de distribución
-- **comparacion_barajado.png**: Comparación de métodos de barajado
+### Deployment
+- **Vercel** - Serverless deployment platform
+- **PostgreSQL** - Production database (optional)
 
-### Formato de Lectura
+## 📊 Features Status
 
-```json
-{
-  "fecha": "2024-10-25T...",
-  "tipo_tirada": "Tres Cartas",
-  "pregunta": "¿Cómo me va en el amor?",
-  "cartas": [
-    {
-      "posicion": "Pasado",
-      "carta": "El Sol",
-      "invertida": false,
-      "significado": "Alegría, éxito, celebración",
-      "palabras_clave": ["alegría", "éxito"]
-    }
-  ],
-  "interpretacion": "..."
-}
-```
+| Feature | Status | Notes |
+|---------|--------|-------|
+| Tarot Readings | ✅ Complete | All spread types working |
+| User Authentication | ✅ Complete | JWT-based auth |
+| Subscription System | ✅ Complete | Free/Premium tiers |
+| Reading History | ✅ Complete | Full CRUD operations |
+| AI Interpretations | ✅ Complete | Gemini AI integration |
+| Theme Support | ✅ Complete | Light/Dark modes |
+| Astrology Features | ❌ Disabled | Heavy dependencies (250MB+) |
 
-## 🎨 Personalización
+## 🚨 Known Limitations
 
-### Modificar Cartas
+- **Astrology features disabled** on Vercel due to heavy dependencies (pyswisseph, numpy, matplotlib)
+- **In-memory database** on Vercel (stateless) - use PostgreSQL for production
+- **Cold start latency** on serverless functions (~2-3 seconds)
 
-Editar las definiciones en:
-- `tarot_reader.py` (líneas 49-421)
-- `tarot_web.js` (objeto TAROT_DB)
+## 🤝 Contributing
 
-### Nuevos Tipos de Tirada
+Contributions are welcome! Please follow these steps:
 
-1. Agregar al enum `TipoTirada`
-2. Definir posiciones en `_definir_tiradas()`
-3. Actualizar la interfaz web
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-### Algoritmos de Aleatorización
+## 📝 License
 
-Implementar nuevos generadores en `GeneradorAleatorio` o `GeneradorCuanticoSimulado`.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🔧 Configuración Avanzada
+## 🆘 Support
 
-### Variables de Entorno
+- **Issues**: [GitHub Issues](https://github.com/yourusername/tarot-app/issues)
+- **Documentation**: See `docs/` directory
+- **Build Problems**: Run `./scripts/build.sh` for diagnostics
 
-```bash
-# Configurar fuente de aleatoriedad por defecto
-export TAROT_RANDOM_SOURCE="combinado"
+## 🎉 Acknowledgments
 
-# Habilitar modo debug
-export TAROT_DEBUG="true"
-```
-
-### Parámetros del Verificador
-
-```python
-# En el código
-verificador = VerificadorAleatoriedad(tamano_ventana=5000)  # Más muestras
-```
-
-## 🐛 Resolución de Problemas
-
-### Errores Comunes
-
-#### "ModuleNotFoundError: No module named 'numpy'"
-```bash
-pip install numpy matplotlib scipy
-```
-
-#### "Entropía baja del kernel"
-```bash
-# En Linux, instalar generador de entropía
-sudo apt-get install rng-tools
-sudo systemctl enable rngd
-```
-
-#### La interfaz web no carga
-- Verificar que `tarot_web.js` esté en la misma carpeta
-- Abrir las herramientas de desarrollador para ver errores
-- Probar en modo servidor local
-
-### Modo Debug
-
-Activar logging detallado modificando las llamadas a `print()` por un sistema de logging:
-
-```python
-import logging
-logging.basicConfig(level=logging.DEBUG)
-```
-
-## 📈 Métricas de Calidad
-
-### Interpretar Resultados
-
-- **Calidad > 90%**: Excelente aleatoriedad
-- **Calidad 70-90%**: Buena aleatoriedad 
-- **Calidad 50-70%**: Regular, mejorable
-- **Calidad < 50%**: Pobre, requiere ajustes
-
-### Factores que Afectan la Calidad
-
-- Entropía disponible del sistema
-- Velocidad del procesador
-- Carga del sistema
-- Fuente de aleatoriedad seleccionada
-
-## 🤝 Contribución
-
-1. Fork del repositorio
-2. Crear rama para la característica (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit de los cambios (`git commit -am 'Agregar nueva funcionalidad'`)
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
-5. Crear Pull Request
-
-### Pautas de Contribución
-
-- Seguir las convenciones de código en `CRUSH.md`
-- Agregar pruebas para nuevas funcionalidades
-- Documentar cambios en el README
-- Mantener compatibilidad hacia atrás
-
-## 📝 Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para detalles.
-
-## 🙏 Agradecimientos
-
-- Inspirado en los sistemas tradicionales de tarot
-- Utiliza principios de aleatoriedad criptográfica
-- Diseño web inspirado en la estética mística
-
-## 📞 Soporte
-
-Para reportar bugs o solicitar funcionalidades:
-
-1. Crear un issue en el repositorio
-2. Incluir información del sistema
-3. Pasos para reproducir el problema
-4. Logs relevantes
+- Tarot card interpretations powered by Google Gemini AI
+- Card images and symbolism from traditional Rider-Waite deck
+- Built with ❤️ for the mystical community
 
 ---
 
-*Que las cartas iluminen tu camino* ✨
+**Ready to deploy?** Run `./scripts/build.sh` then `vercel --prod` 🚀

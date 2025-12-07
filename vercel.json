@@ -1,10 +1,20 @@
 {
   "version": 2,
-  "functions": {
-    "api/index.py": {
-      "memory": 1024,
-      "maxDuration": 30,
-      "runtime": "python3.11@0.2.25"
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "50mb"
+      }
+    },
+    {
+      "src": "public/tarot_web.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "public/tarot_web.js",
+      "use": "@vercel/static"
     }
   },
   "redirects": [
@@ -13,12 +23,16 @@
       "destination": "/api/index.py"
     },
     {
-      "source": "/",
-      "destination": "/tarot_web.html"
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|json))",
+      "dest": "/public/$1"
     },
     {
-      "source": "/(.*)",
-      "destination": "/tarot_web.html"
+      "src": "/",
+      "dest": "/public/tarot_web.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/tarot_web.html"
     }
   ],
   "env": {
