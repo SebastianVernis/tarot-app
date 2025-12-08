@@ -3,14 +3,14 @@ Rutas para cálculos astrológicos y cartas natales
 """
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import get_jwt_identity
-from models import BirthChart, AspectRecord, User, db
-from auth import login_required
-from astrology_calculator import (
+from src.models import BirthChart, AspectRecord, User, db
+from src.auth import login_required
+from src.astrology_calculator import (
     AstrologyCalculator,
     HouseSystem,
     calculate_houses_and_aspects
 )
-from gemini_service import GeminiAstrologyService
+from src.gemini_service import GeminiAstrologyService
 from datetime import datetime
 import pytz
 

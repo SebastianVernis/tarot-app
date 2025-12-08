@@ -2,7 +2,7 @@
 Script para inicializar la base de datos con datos de prueba
 """
 from app import create_app
-from models import db, User, Subscription
+from src.models import db, User, Subscription
 from datetime import datetime, timedelta
 
 def init_database():

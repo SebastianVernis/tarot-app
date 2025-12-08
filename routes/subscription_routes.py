@@ -3,8 +3,8 @@ Rutas para gestión de suscripciones
 """
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import get_jwt_identity
-from models import User, Subscription, db
-from auth import login_required
+from src.models import User, Subscription, db
+from src.auth import login_required
 from datetime import datetime, timedelta
 
 subscription_bp = Blueprint('subscription', __name__, url_prefix='/api/subscription')

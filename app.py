@@ -5,8 +5,8 @@ from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
 from flask_migrate import Migrate
 from config import Config
-from models import db
-from auth import init_jwt
+from src.models import db
+from src.auth import init_jwt
 import os
 
 # Importar blueprints

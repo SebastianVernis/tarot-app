@@ -3,9 +3,9 @@ Rutas para lecturas de tarot
 """
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import get_jwt_identity
-from models import Reading, User, db
-from auth import login_required
-from middleware import require_reading_limit, require_spread_access, FreemiumMiddleware
+from src.models import Reading, User, db
+from src.auth import login_required
+from src.middleware import require_reading_limit, require_spread_access, FreemiumMiddleware
 from config import Config
 
 reading_bp = Blueprint('reading', __name__, url_prefix='/api/readings')
