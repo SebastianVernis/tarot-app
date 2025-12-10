@@ -11,7 +11,7 @@ from flask_jwt_extended import (
     verify_jwt_in_request,
     get_jwt
 )
-from models import User, db
+from src.models import User, db
 from datetime import datetime
 
 jwt = JWTManager()

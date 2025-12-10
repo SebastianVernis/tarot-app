@@ -2,7 +2,7 @@
 Script de prueba para validar cálculos astrológicos
 """
 from datetime import datetime
-from astrology_calculator import (
+from src.astrology_calculator import (
     AstrologyCalculator,
     HouseSystem,
     Planet,

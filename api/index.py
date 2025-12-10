@@ -53,8 +53,8 @@ CORS(app,
 
 # Initialize database (lightweight - SQLite or PostgreSQL)
 try:
-    from models import db
-    from auth import init_jwt
+    from src.models import db
+    from src.auth import init_jwt
     
     db.init_app(app)
     init_jwt(app)

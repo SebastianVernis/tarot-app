@@ -2,7 +2,7 @@
 Middleware para verificar límites freemium
 """
 from flask import jsonify
-from models import User, UsageLimit, db
+from src.models import User, UsageLimit, db
 from datetime import date
 from config import Config
 

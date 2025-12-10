@@ -3,8 +3,8 @@ Rutas de autenticación
 """
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from models import User, db
-from auth import create_tokens, login_required
+from src.models import User, db
+from src.auth import create_tokens, login_required
 import re
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/api/auth')

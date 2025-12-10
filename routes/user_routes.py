@@ -3,9 +3,9 @@ Rutas de usuario y configuraciones
 """
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import get_jwt_identity
-from models import User, Reading, db
-from auth import login_required
-from middleware import FreemiumMiddleware
+from src.models import User, Reading, db
+from src.auth import login_required
+from src.middleware import FreemiumMiddleware
 
 user_bp = Blueprint('user', __name__, url_prefix='/api/user')
 
