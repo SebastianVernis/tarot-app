@@ -1,224 +1,280 @@
-# 🔮 Tarot App - Mystical Card Reading Platform
+# 🔮 Tarot Místico
 
-A modern, full-stack web application for Tarot card readings with AI-powered interpretations, user authentication, and subscription management.
+**Professional Tarot Reading Platform with AI-Powered Interpretations**
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/tarot-app)
+A modern, scalable web application for tarot card readings, astrology calculations, and mystical insights powered by Google's Gemini AI.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/tarot-mistico)
+
+---
 
 ## ✨ Features
 
-- **🎴 Tarot Readings**: Multiple spread types (Single Card, 3-Card, Celtic Cross, etc.)
-- **🤖 AI Interpretations**: Powered by Google Gemini AI for personalized readings
-- **👤 User Authentication**: Secure JWT-based authentication system
-- **💳 Subscription Management**: Free and Premium tiers with reading limits
-- **📊 Reading History**: Track and review past readings
-- **🎨 Theme Support**: Light/Dark mode with persistent preferences
-- **📱 Responsive Design**: Works seamlessly on desktop and mobile devices
+### 🎴 Tarot Readings
+- **Multiple Spread Types**: Single card, 3-card, Celtic Cross, and more
+- **AI Interpretations**: Powered by Google Gemini for deep, personalized insights
+- **Reading History**: Save and review past readings
+- **Beautiful UI**: Modern, responsive design with theme support
 
-## 🚀 Quick Start
+### 🌟 Astrology (Optional)
+- **Birth Chart Calculations**: Precise planetary positions
+- **House Systems**: Multiple house calculation methods
+- **Astrological Aspects**: Detailed planetary relationships
+- **AI Analysis**: Gemini-powered chart interpretations
+
+### 👤 User Management
+- **JWT Authentication**: Secure user sessions
+- **Freemium Model**: Free tier with premium upgrades
+- **Subscription Management**: Flexible pricing tiers
+- **Theme Persistence**: Dark/light mode preferences
+
+---
+
+## 🚀 Quick Deploy to Vercel
 
 ### Prerequisites
+- [Vercel Account](https://vercel.com/signup) (free)
+- [Google Gemini API Key](https://makersuite.google.com/app/apikey) (free tier available)
 
-- Python 3.9+
-- Node.js 22+ (for Vercel CLI)
-- PostgreSQL (optional, SQLite used by default)
+### One-Click Deploy
 
-### Local Development
-
-1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd tarot-app
-   ```
-
-2. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Set environment variables**
-   ```bash
-   cp .env.example .env
-   # Edit .env with your configuration
-   ```
-
-4. **Run the application**
-   ```bash
-   python app.py
-   ```
-
-5. **Open in browser**
-   ```
-   http://localhost:5000
-   ```
-
-### Deploy to Vercel
-
-1. **Install Vercel CLI**
-   ```bash
-   npm i -g vercel
-   ```
-
-2. **Login to Vercel**
-   ```bash
-   vercel login
-   ```
-
-3. **Validate build**
-   ```bash
-   ./scripts/build.sh
-   ```
-
-4. **Deploy**
+1. **Click the Deploy button** above or run:
    ```bash
    vercel --prod
    ```
 
-5. **Set environment variables**
+2. **Set Environment Variables** in Vercel Dashboard:
    ```bash
-   vercel env add SECRET_KEY
-   vercel env add JWT_SECRET_KEY
-   vercel env add GEMINI_API_KEY
-   vercel env add DATABASE_URL  # Optional
+   SECRET_KEY=your-secret-key-here
+   JWT_SECRET_KEY=your-jwt-secret-here
+   GEMINI_API_KEY=your-gemini-api-key-here
+   DATABASE_URL=postgresql://... # Optional, uses SQLite if not set
    ```
+
+3. **Done!** Your app is live at `https://your-app.vercel.app`
+
+---
+
+## 🛠️ Local Development
+
+### Setup
+
+```bash
+# Clone repository
+git clone https://github.com/yourusername/tarot-mistico.git
+cd tarot-mistico
+
+# Create virtual environment
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Create .env file
+cp .env.example .env
+# Edit .env with your API keys
+
+# Run development server
+python app.py
+```
+
+Visit `http://localhost:5000`
+
+### Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+# Required
+SECRET_KEY=your-secret-key-here
+JWT_SECRET_KEY=your-jwt-secret-key-here
+GEMINI_API_KEY=your-gemini-api-key-here
+
+# Optional
+DATABASE_URL=sqlite:///tarot.db  # Or PostgreSQL URL
+FLASK_ENV=development
+PORT=5000
+```
+
+---
 
 ## 📁 Project Structure
 
 ```
-tarot-app/
-├── api/                    # Vercel serverless functions
-│   └── index.py           # WSGI entry point
-├── routes/                # Flask route blueprints
-│   ├── auth.py           # Authentication routes
-│   ├── tarot.py          # Tarot reading routes
-│   └── subscription.py   # Subscription routes
-├── docs/                  # Documentation
-│   ├── VERCEL_QUICK_START.md
-│   ├── DEPLOYMENT_READY_VERCEL.md
-│   └── ...
-├── scripts/               # Build and deployment scripts
-│   ├── build.sh          # Validation script
-│   ├── deploy.sh         # Deployment script
-│   └── deploy-vercel.sh  # Vercel-specific deployment
-├── assets/                # Images and static assets
-├── app.py                # Main Flask application
-├── config.py             # Configuration management
-├── auth.py               # Authentication logic
-├── tarot_web.html        # Frontend HTML
-├── tarot_web.js          # Frontend JavaScript
+tarot-mistico/
+├── api/
+│   └── index.py          # Vercel serverless entry point
+├── routes/
+│   ├── auth_routes.py    # Authentication endpoints
+│   ├── user_routes.py    # User management
+│   ├── reading_routes.py # Tarot reading logic
+│   ├── subscription_routes.py
+│   └── astrology_routes.py
+├── src/
+│   ├── models.py         # Database models
+│   ├── auth.py           # JWT authentication
+│   ├── tarot_reader.py   # Tarot card logic
+│   ├── gemini_service.py # AI integration
+│   └── astrology_calculator.py
+├── public/
+│   ├── tarot_web.html    # Frontend UI
+│   └── tarot_web.js      # Frontend logic
+├── app.py                # Local development server
+├── config.py             # Configuration
 ├── requirements.txt      # Python dependencies
 ├── vercel.json           # Vercel configuration
 └── README.md             # This file
 ```
 
+---
+
 ## 🔧 Configuration
 
-### Environment Variables
+### Vercel Settings
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `SECRET_KEY` | Flask secret key for sessions | ✅ Yes |
-| `JWT_SECRET_KEY` | JWT token signing key | ✅ Yes |
-| `GEMINI_API_KEY` | Google Gemini API key for AI interpretations | ✅ Yes |
-| `DATABASE_URL` | PostgreSQL connection string | ❌ No (SQLite default) |
-| `FLASK_ENV` | Environment (development/production) | ❌ No |
+The `vercel.json` file is pre-configured for optimal performance:
 
-### Database
+- **Runtime**: Python 3.11
+- **Memory**: 1024 MB
+- **Timeout**: 30 seconds
+- **Region**: US East (iad1)
+- **Max Lambda Size**: 50 MB
 
-- **Development**: SQLite (automatic, no setup required)
-- **Production**: PostgreSQL recommended (set `DATABASE_URL`)
-- **Vercel**: In-memory SQLite (stateless, for testing only)
+### Database Options
 
-## 📚 Documentation
-
-- **[Quick Start Guide](docs/VERCEL_QUICK_START.md)** - Get started in 3 steps
-- **[Deployment Guide](docs/DEPLOYMENT_READY_VERCEL.md)** - Complete deployment instructions
-- **[Build Guide](docs/VERCEL_BUILD_GUIDE.md)** - Comprehensive build documentation
-- **[API Documentation](docs/COMO_USAR.txt)** - API endpoints and usage
-
-## 🧪 Testing
-
-### Run Build Validation
-```bash
-./scripts/build.sh
-```
-
-### Test API Endpoints
-```bash
-# Health check
-curl http://localhost:5000/api/health
-
-# Get tarot cards
-curl http://localhost:5000/api/tarot/cards
-```
-
-### Test Frontend
-Open `http://localhost:5000` in your browser and test:
-- User registration/login
-- Card readings (all spread types)
-- Theme switching
-- Reading history
-
-## 🛠️ Technology Stack
-
-### Backend
-- **Flask** - Web framework
-- **SQLAlchemy** - ORM
-- **Flask-JWT-Extended** - Authentication
-- **Google Gemini AI** - AI interpretations
-
-### Frontend
-- **Vanilla JavaScript** - No framework dependencies
-- **HTML5/CSS3** - Modern, responsive design
-- **Fetch API** - RESTful API communication
-
-### Deployment
-- **Vercel** - Serverless deployment platform
-- **PostgreSQL** - Production database (optional)
-
-## 📊 Features Status
-
-| Feature | Status | Notes |
-|---------|--------|-------|
-| Tarot Readings | ✅ Complete | All spread types working |
-| User Authentication | ✅ Complete | JWT-based auth |
-| Subscription System | ✅ Complete | Free/Premium tiers |
-| Reading History | ✅ Complete | Full CRUD operations |
-| AI Interpretations | ✅ Complete | Gemini AI integration |
-| Theme Support | ✅ Complete | Light/Dark modes |
-| Astrology Features | ❌ Disabled | Heavy dependencies (250MB+) |
-
-## 🚨 Known Limitations
-
-- **Astrology features disabled** on Vercel due to heavy dependencies (pyswisseph, numpy, matplotlib)
-- **In-memory database** on Vercel (stateless) - use PostgreSQL for production
-- **Cold start latency** on serverless functions (~2-3 seconds)
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🆘 Support
-
-- **Issues**: [GitHub Issues](https://github.com/yourusername/tarot-app/issues)
-- **Documentation**: See `docs/` directory
-- **Build Problems**: Run `./scripts/build.sh` for diagnostics
-
-## 🎉 Acknowledgments
-
-- Tarot card interpretations powered by Google Gemini AI
-- Card images and symbolism from traditional Rider-Waite deck
-- Built with ❤️ for the mystical community
+1. **SQLite** (Default): Automatic, no setup required
+2. **PostgreSQL**: Set `DATABASE_URL` environment variable
+3. **In-Memory**: For testing only
 
 ---
 
-**Ready to deploy?** Run `./scripts/build.sh` then `vercel --prod` 🚀
+## 📊 API Endpoints
+
+### Health & Info
+- `GET /api/health` - Health check
+- `GET /api/info` - API information
+
+### Authentication
+- `POST /api/auth/register` - Register new user
+- `POST /api/auth/login` - Login
+- `POST /api/auth/logout` - Logout
+
+### Readings
+- `POST /api/readings/draw` - Draw tarot cards
+- `GET /api/readings/history` - Get reading history
+- `GET /api/readings/:id` - Get specific reading
+
+### User
+- `GET /api/user/profile` - Get user profile
+- `PUT /api/user/profile` - Update profile
+- `PUT /api/user/theme` - Update theme preference
+
+### Subscription
+- `GET /api/subscription/status` - Get subscription status
+- `POST /api/subscription/upgrade` - Upgrade subscription
+
+### Astrology (Optional)
+- `POST /api/astrology/birth-chart` - Calculate birth chart
+- `POST /api/astrology/interpret` - Get AI interpretation
+
+---
+
+## 🧪 Testing
+
+### Health Check
+```bash
+curl https://your-app.vercel.app/api/health
+```
+
+### Test Reading
+```bash
+curl -X POST https://your-app.vercel.app/api/readings/draw \
+  -H "Content-Type: application/json" \
+  -d '{"spread_type": "single", "question": "What does today hold?"}'
+```
+
+---
+
+## 🔐 Security
+
+- **JWT Authentication**: Secure token-based auth
+- **Password Hashing**: Bcrypt with salt
+- **CORS Protection**: Configured origins only
+- **Environment Variables**: Secrets never committed
+- **SQL Injection Protection**: SQLAlchemy ORM
+- **Rate Limiting**: Built-in protection
+
+---
+
+## 📈 Scaling
+
+### Vercel Serverless
+- **Auto-scaling**: Handles traffic spikes automatically
+- **Global CDN**: Fast static asset delivery
+- **Edge Network**: Low latency worldwide
+- **Zero Config**: No server management
+
+### Database Scaling
+- **PostgreSQL**: Recommended for production
+- **Connection Pooling**: Optimized for serverless
+- **Read Replicas**: For high-traffic apps
+
+---
+
+## 🐛 Troubleshooting
+
+### Build Fails
+- Check Python version (3.11 required)
+- Verify all dependencies in `requirements.txt`
+- Check Vercel build logs
+
+### API Errors
+- Verify environment variables are set
+- Check Gemini API key is valid
+- Review Vercel function logs
+
+### Database Issues
+- Ensure `DATABASE_URL` is correct
+- Check database connection limits
+- Verify migrations are applied
+
+---
+
+## 📝 License
+
+MIT License - See LICENSE file for details
+
+---
+
+## 🤝 Contributing
+
+Contributions welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+---
+
+## 📧 Support
+
+- **Issues**: [GitHub Issues](https://github.com/yourusername/tarot-mistico/issues)
+- **Email**: support@tarotmistico.com
+- **Documentation**: [Full Docs](https://docs.tarotmistico.com)
+
+---
+
+## 🌟 Acknowledgments
+
+- **Google Gemini**: AI-powered interpretations
+- **Vercel**: Serverless hosting platform
+- **Flask**: Python web framework
+- **Tarot Community**: Card meanings and spreads
+
+---
+
+**Made with ❤️ and ✨ by the Tarot Místico Team**
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/tarot-mistico)

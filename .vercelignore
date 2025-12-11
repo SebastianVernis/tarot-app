@@ -1,26 +1,7 @@
-# Documentation
-docs/
-*.md
-!README.md
+# Archive directory
+.archive/
 
-# Scripts
-scripts/
-
-# Tests
-tests/
-test_*.py
-*_test.py
-
-# Utilities
-utils/
-
-# Assets (images not needed for deployment)
-assets/
-
-# Legacy files
-public/legacy/
-
-# Python
+# Python cache
 __pycache__/
 *.pyc
 *.pyo
@@ -31,9 +12,6 @@ __pycache__/
 *.egg-info/
 dist/
 build/
-.pytest_cache/
-.coverage
-htmlcov/
 
 # Virtual environments
 venv/
@@ -47,14 +25,31 @@ ENV/
 *.swp
 *.swo
 *~
+
+# OS
 .DS_Store
+Thumbs.db
 
 # Git
 .git/
 .gitignore
-.gitattributes
 
-# Database
+# Environment
+.env
+.env.local
+
+# Testing
+tests/
+*.test.py
+pytest_cache/
+.coverage
+htmlcov/
+
+# Documentation (archived)
+*.md
+!README.md
+
+# Local database
 *.db
 *.sqlite
 *.sqlite3
@@ -63,15 +58,3 @@ instance/
 # Logs
 *.log
 logs/
-
-# Environment
-.env.local
-.env.*.local
-
-# Render specific
-render.yaml
-
-# Backup files
-*.bak
-*.backup
-*.old
