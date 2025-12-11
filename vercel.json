@@ -1,44 +1,38 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "api/index.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "50mb"
-      }
-    },
-    {
-      "src": "public/tarot_web.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "public/tarot_web.js",
-      "use": "@vercel/static"
-    }
-  },
-  "redirects": [
+  "name": "tarot-mistico",
+  "rewrites": [
     {
       "source": "/api/(.*)",
       "destination": "/api/index.py"
     },
     {
-      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|json))",
-      "dest": "/public/$1"
-    },
+      "source": "/(.*)",
+      "destination": "/public/tarot_web.html"
+    }
+  ],
+  "headers": [
     {
-      "src": "/",
-      "dest": "/public/tarot_web.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/public/tarot_web.html"
+      "source": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|json|woff|woff2|ttf|eot))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     }
   ],
   "env": {
     "FLASK_ENV": "production",
     "PYTHONPATH": "/var/task",
     "PYTHON_VERSION": "3.11"
+  },
+  "functions": {
+    "api/index.py": {
+      "runtime": "python3.11",
+      "memory": 1024,
+      "maxDuration": 30
+    }
   },
   "regions": ["iad1"]
 }
