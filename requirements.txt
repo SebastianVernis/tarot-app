@@ -8,9 +8,6 @@ Flask-JWT-Extended==4.6.0
 Flask-CORS==4.0.0
 Flask-Migrate==4.0.5
 
-# Database
-SQLAlchemy==2.0.23
-
 # Security
 Werkzeug==3.0.1
 PyJWT==2.8.0

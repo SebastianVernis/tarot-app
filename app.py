@@ -5,7 +5,6 @@ from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
 from flask_migrate import Migrate
 from config import Config
-from src.models import db
 from src.auth import init_jwt
 import os
 
@@ -23,12 +22,8 @@ def create_app(config_class=Config):
     app.config.from_object(config_class)
     
     # Inicializar extensiones
-    db.init_app(app)
     init_jwt(app)
     CORS(app, origins=config_class.CORS_ORIGINS, supports_credentials=True)
-    
-    # Migraciones
-    migrate = Migrate(app, db)
     
     # Registrar blueprints
     app.register_blueprint(auth_bp)
@@ -36,10 +31,6 @@ def create_app(config_class=Config):
     app.register_blueprint(reading_bp)
     app.register_blueprint(subscription_bp)
     app.register_blueprint(astrology_bp)
-    
-    # Crear tablas si no existen
-    with app.app_context():
-        db.create_all()
     
     # Rutas básicas
     @app.route('/')
